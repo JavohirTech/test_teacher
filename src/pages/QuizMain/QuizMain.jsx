@@ -16,7 +16,8 @@ const sampleQuestions = [
       "Madrid",
       "Rome What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem",
     ],
-    correctAnswer: "Toshkent",
+    correctAnswer:
+      "Rome What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem",
   },
 ];
 
@@ -102,18 +103,39 @@ function QuizMain() {
 
   if (currentQuestion === randomizedQuestions.length) {
     return (
-      <div className="app">
-        <div className="score-section">
-          <h3>Your Score:</h3>
-          <p>To`g`ri:{score}</p>
-          <p>Xato:{randomizedQuestions.length - score}</p>
+      <div className="quiz_main_results">
+        <div className="d-flex align-items-center justify-content-center">
+          <h2 className="text-center">Sizning natijangiz:</h2>
+          <div className="quiz_main_stats">
+            <span className="text-white bg-success bg-gradient rounded-top">
+              To`g`ri:{score}
+            </span>
+            <span className="text-white bg-danger bg-gradient rounded-bottom">
+              Xato:{randomizedQuestions.length - score}
+            </span>
+          </div>
         </div>
         <ul>
           {answers.map((answer, index) => (
             <li key={index}>
-              <strong>Savol:</strong> {answer.question} <br />
-              <strong>Sizning javobingiz:</strong> {answer.userAnswer} <br />
-              <strong>To`g`ri javob:</strong> {answer.correctAnswer}
+              <h3>Savol: {answer.question}</h3>
+              {answer.userAnswer == answer.correctAnswer ? (
+                <span className="bg-success px-4 py-2 text-white rounded">
+                  {answer.userAnswer}{" "}
+                  <i className="fa-solid fa-circle-check fa-3x p-3"></i>
+                </span>
+              ) : (
+                <div className="checking_answer text-white">
+                  <span className="bg-danger px-4 py-2 rounded-start">
+                    {answer.userAnswer}{" "}
+                    <i className="fa-sharp fa-solid fa-circle-exclamation fa-3x p-3"></i>
+                  </span>
+                  <span className="bg-success px-4 py-2 rounded-end">
+                    {answer.correctAnswer}{" "}
+                    <i className="fa-solid fa-circle-check fa-3x p-3"></i>
+                  </span>
+                </div>
+              )}
             </li>
           ))}
         </ul>

@@ -37,3 +37,48 @@
 .quiz_question label input[type="radio"]:checked+i {
     opacity: 1;
 }
+
+.quiz_main_results {
+    background-color: rgba(255, 230, 162, 0.266);
+    width: 80%;
+    margin: 0 auto;
+    padding: 2%;
+    border: 1px solid rgb(255, 230, 162);
+}
+
+.quiz_main_results ul {
+    list-style: none;
+}
+
+.quiz_main_results ul li {
+    padding: 20px 0;
+}
+
+.quiz_main_results ul li .checking_answer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz_main_results ul li span{
+    width: 100%!important;
+}
+
+.quiz_main_results ul li .checking_answer span,
+.quiz_main_results ul li span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.quiz_main_stats{
+    padding: 2%;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.quiz_main_stats span{
+    padding: 2px 10px;
+    font-size: 10px;
+}
