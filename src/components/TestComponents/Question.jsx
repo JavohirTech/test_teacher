@@ -11,13 +11,13 @@ function Question({ data, handleAnswerOptionClick }) {
 
   useEffect(() => {
     return () => {
-      setSelectedOption(null); // Reset the selected option when the component is unmounted
+      setSelectedOption(null);
     };
   }, []);
 
   return (
-    <div className="question">
-      <h2>{data.questionText}</h2>
+    <div className="quiz_question">
+      <h3 className="mb-4">{data.questionText}</h3>
       {data.options.map((option, index) => (
         <Option
           key={index}

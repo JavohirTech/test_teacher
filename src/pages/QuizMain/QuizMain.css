@@ -1,0 +1,39 @@
+.quiz_main_wrapper {
+    height: 100vh;
+}
+
+.quiz_question {
+    margin: 20px 0;
+}
+
+.quiz_main_wrapper div {
+    width: 700px;
+}
+
+.quiz_question label {
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 10px 0;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    cursor: pointer;
+}
+
+.quiz_question label input {
+    accent-color: green;
+    margin: 0 20px;
+    transform: scale(1.5);
+    display: none;
+}
+
+.quiz_question label i {
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 50%;
+    padding: 7px 8px;
+    opacity: 0;
+}
+
+.quiz_question label input[type="radio"]:checked+i {
+    opacity: 1;
+}

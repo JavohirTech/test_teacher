@@ -2,7 +2,7 @@ import React from "react";
 
 function Option({ text, onChange, name, isChecked }) {
   return (
-    <label>
+    <label className="d-flex justify-content-between align-items-center px-4 pe-2">
       <input
         type="radio"
         name={name}
@@ -11,6 +11,7 @@ function Option({ text, onChange, name, isChecked }) {
         onChange={onChange}
       />
       {text}
+      <i className="bg-success text-white fa-solid fa-check"></i>
     </label>
   );
 }
