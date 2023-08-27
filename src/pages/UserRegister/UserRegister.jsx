@@ -38,9 +38,11 @@ const UserRegister = () => {
             type="submit"
             className="btn btn-primary w-100 bg-primary bg-gradient"
           >
-            Ro'yxatdan o'tish <i className="fa-solid fa-angles-right"></i>
+            Ro`yxatdan o`tish <i className="fa-solid fa-angles-right"></i>
           </button>
-          <p className="p-2 text-center fs-6">Hisobim bor <a href="/UserLogin">Kirish</a></p>
+          <p className="p-2 text-center fs-6">
+            Hisobim bor <a href="/UserLogin">Kirish</a>
+          </p>
         </form>
       </div>
     </>

@@ -1,5 +1,37 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+}
+
+.score-section {
+  background-color: #f7f7f7;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.score-section h3 {
+  margin-top: 0;
 }
