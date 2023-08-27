@@ -11,34 +11,6 @@ const UserRegister = () => {
           <h2 className="text-center fst-italic text-primary opacity-75">
             Nasiba Abdullayeva
           </h2>
-          <div className="row">
-            <div className="col">
-              <div className="mb-3">
-                <label htmlFor="userName" className="form-label">
-                  Ism
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="userName"
-                  aria-describedby="emailHelp"
-                />
-              </div>
-            </div>
-            <div className="col">
-              <div className="mb-3">
-                <label htmlFor="userLastName" className="form-label">
-                  Familiya
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="userLastName"
-                  aria-describedby="emailHelp"
-                />
-              </div>
-            </div>
-          </div>
           <div className="mb-3">
             <label htmlFor="userLogin" className="form-label">
               Login
@@ -53,6 +25,12 @@ const UserRegister = () => {
           <div className="mb-3">
             <label htmlFor="userPassword" className="form-label">
               Parol
+            </label>
+            <input type="password" className="form-control" id="userPassword" />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="userPassword" className="form-label">
+              Parol qaytadan
             </label>
             <input type="password" className="form-control" id="userPassword" />
           </div>
