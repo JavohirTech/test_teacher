@@ -1,12 +1,14 @@
 import "bootstrap/dist/css/bootstrap.css";
 import QuizMain from "./pages/QuizMain/QuizMain";
+import AllTests from "./pages/AllTests/AllTests";
 
-const App = ()=>{
-  return(
+const App = () => {
+  return (
     <>
-      <QuizMain/>
+      {/* <QuizMain/> */}
+      <AllTests />
     </>
-  )
-}
+  );
+};
 
 export default App;

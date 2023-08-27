@@ -104,7 +104,7 @@ function QuizMain() {
   if (currentQuestion === randomizedQuestions.length) {
     return (
       <div className="quiz_main_results">
-        <div className="d-flex align-items-center justify-content-center">
+        <div className="d-flex align-items-center justify-content-center gap-1">
           <h2 className="text-center">Sizning natijangiz:</h2>
           <div className="quiz_main_stats">
             <span className="text-white bg-success bg-gradient rounded-top">
@@ -127,11 +127,11 @@ function QuizMain() {
                 </span>
               ) : (
                 <div className="checking_answer text-white">
-                  <span className="bg-danger px-4 py-2 rounded-start">
+                  <span className="bg-danger bg-gradient px-4 py-2 rounded-start">
                     {answer.userAnswer}{" "}
                     <i className="fa-sharp fa-solid fa-circle-exclamation fa-3x p-3"></i>
                   </span>
-                  <span className="bg-success px-4 py-2 rounded-end">
+                  <span className="bg-success bg-gradient px-4 py-2 rounded-end">
                     {answer.correctAnswer}{" "}
                     <i className="fa-solid fa-circle-check fa-3x p-3"></i>
                   </span>
