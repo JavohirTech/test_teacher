@@ -114,6 +114,7 @@ function QuizMain() {
               Xato:{randomizedQuestions.length - score}
             </span>
           </div>
+          <span className="btn btn-outline-danger">{score * 2}</span>
         </div>
         <ul>
           {answers.map((answer, index) => (
