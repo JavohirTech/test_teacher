@@ -30,7 +30,6 @@ function shuffleArray(array) {
 
   return array;
 }
-
 const randomizedQuestions = shuffleArray([...sampleQuestions]);
 randomizedQuestions.forEach((question) => {
   question.options = shuffleArray([...question.options]);
@@ -40,17 +39,17 @@ function App() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(randomizedQuestions.length * 1);
 
   useEffect(() => {
     if (timeLeft > 0 && currentQuestion < randomizedQuestions.length) {
       const timerId = setTimeout(() => {
         setTimeLeft(timeLeft - 1);
       }, 1000);
-      return () => clearTimeout(timerId); // Clear the timer if the component is unmounted
+      return () => clearTimeout(timerId);
     } else if (timeLeft === 0) {
       console.log(answers);
-      setCurrentQuestion(randomizedQuestions.length); // Finish the quiz
+      setCurrentQuestion(randomizedQuestions.length);
     }
   }, [timeLeft, currentQuestion, answers]);
 
@@ -69,7 +68,12 @@ function App() {
   };
 
   const handleNextButtonClick = () => {
-    setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+    if (currentQuestion === randomizedQuestions.length - 1) {
+      console.log(answers);
+      setCurrentQuestion(randomizedQuestions.length);
+    } else {
+      setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+    }
   };
 
   if (currentQuestion === randomizedQuestions.length) {
@@ -97,7 +101,10 @@ function App() {
 
   return (
     <div className="app">
-      <div className="timer">Time left: {timeLeft} seconds</div>
+      <div className="timer">
+        Time left: {Math.floor(timeLeft / 60)}:
+        {(timeLeft % 60).toString().padStart(2, "0")}
+      </div>
       <Question
         key={currentQuestion}
         data={randomizedQuestions[currentQuestion]}
