@@ -1,0 +1,9 @@
+.user_register_wrapper form {
+    width: 400px;
+}
+
+@media screen and (max-width:468px) {
+    .user_register_wrapper form {
+        width: 300px;
+    }
+}
