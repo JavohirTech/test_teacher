@@ -3,6 +3,7 @@
     display: grid;
     gap: 20px;
     grid-template-columns: auto auto auto auto;
+    color: #fff;
 }
 
 .test_cards .test_card {
@@ -13,15 +14,6 @@
     border-radius: 15px;
     overflow: hidden;
 }
-
-/* .test_cards .test_card i {
-    background: linear-gradient(to top, rgb(3, 77, 151), dodgerblue); 
-    border-radius: 0 0 15px 0;
-    padding: 7px 8px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-} */
 
 .test_cards .test_card span {
     position: absolute;
@@ -42,9 +34,6 @@
 }
 
 .test_cards .test_card:hover span {
-    /* background-color: dodgerblue; */
-    /* right: -10px; */
-    /* bottom: -5px; */
     left: 50%;
 }
 

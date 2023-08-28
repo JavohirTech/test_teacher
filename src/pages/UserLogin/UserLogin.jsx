@@ -1,4 +1,4 @@
-import "./UserLogin.css"
+import "./UserLogin.css";
 
 const UserLogin = () => {
   return (
@@ -34,7 +34,9 @@ const UserLogin = () => {
           >
             Test Kirish <i className="fa-solid fa-angles-right"></i>
           </button>
-          <p className="p-2 text-center fs-6">Hisobim yo'q <a href="/UserLogin">Ro'yxatdan o'tish</a></p>
+          <p className="p-2 text-center fs-6">
+            Hisobim yo`q <a href="/UserRegister">Ro`yxatdan o`tish</a>
+          </p>
         </form>
       </div>
     </>

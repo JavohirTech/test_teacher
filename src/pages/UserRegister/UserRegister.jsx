@@ -41,7 +41,7 @@ const UserRegister = () => {
             Ro`yxatdan o`tish <i className="fa-solid fa-angles-right"></i>
           </button>
           <p className="p-2 text-center fs-6">
-            Hisobim bor <a href="/UserLogin">Kirish</a>
+            Hisobim bor <a href="/">Kirish</a>
           </p>
         </form>
       </div>

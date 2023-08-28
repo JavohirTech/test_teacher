@@ -1,0 +1,49 @@
+.sidebar_wrapper {
+    height: 100vh;
+    display: inline-block;
+    position: relative;
+    overflow-y: scroll;
+    width: 250px;
+    border-right: 1px solid dodgerblue;
+}
+
+.sidebar_wrapper .sidebar_list {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar_wrapper .sidebar_list li a {
+    padding: 15px 30px;
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+    color: dodgerblue;
+    text-decoration: none;
+    width: 100%;
+}
+
+.sidebar_wrapper .sidebar_list li i {
+    font-size: 25px;
+}
+
+.sidebar_wrapper .sidebar_list li a:hover,
+.sidebar_list li a.active {
+    background-color: dodgerblue;
+    cursor: pointer;
+    color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar_wrapper .sidebar_list {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .sidebar_wrapper .sidebar_list li {
+        padding: 10px;
+    }
+
+    .sidebar_wrapper .sidebar_list li span {
+        display: none;
+    }
+}

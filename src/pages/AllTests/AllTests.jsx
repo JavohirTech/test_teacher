@@ -8,7 +8,7 @@ const AllTests = () => {
     >
       <div className="all_tests_wrapper">
         <div className="test_cards">
-          <div className="test_card text-white">
+          <div className="test_card">
             <small>Test soni: 40ta</small>
             <h4 className="mb-3">Biologiya</h4>
             <small>Tuzuvchi: N.Abdullayeva</small>
@@ -16,7 +16,7 @@ const AllTests = () => {
               Boshlash<i className="fas fa-arrow-right"></i>
             </span>
           </div>
-          <div className="test_card text-white">
+          <div className="test_card">
             <small>Test soni: 40ta</small>
             <h4 className="mb-3">Biologiya</h4>
             <small>Tuzuvchi: N.Abdullayeva</small>
@@ -24,7 +24,7 @@ const AllTests = () => {
               Boshlash<i className="fas fa-arrow-right"></i>
             </span>
           </div>
-          <div className="test_card text-white">
+          <div className="test_card">
             <small>Test soni: 40ta</small>
             <h4 className="mb-3">Biologiya</h4>
             <small>Tuzuvchi: N.Abdullayeva</small>
@@ -32,7 +32,7 @@ const AllTests = () => {
               Boshlash<i className="fas fa-arrow-right"></i>
             </span>
           </div>
-          <div className="test_card text-white">
+          <div className="test_card">
             <small>Test soni: 40ta</small>
             <h4 className="mb-3">Biologiya</h4>
             <small>Tuzuvchi: N.Abdullayeva</small>
