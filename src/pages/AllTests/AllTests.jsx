@@ -1,6 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import "./AllTests.css";
 
 const AllTests = () => {
+  const navigate = useNavigate();
+  const isUserLogin = sessionStorage.getItem("enus");
+  if (!isUserLogin) {
+    navigate("/");
+  }
   return (
     <div
       className="d-flex justify-content-center align-items-center"

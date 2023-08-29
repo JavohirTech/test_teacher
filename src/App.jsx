@@ -10,13 +10,17 @@ import { Route, Routes } from "react-router-dom";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
 const App = () => {
   const isAdminLogin = sessionStorage.getItem("en");
+  const isUserLogin = sessionStorage.getItem("enus");
   return (
     <>
       <Routes>
         <Route path="/" element={<UserLogin />} />
         <Route path="/userRegister" element={<UserRegister />} />
         <Route path="/quiz" element={<QuizMain />} />
-        <Route path="/alltests" element={<AllTests />} />
+        <Route
+          path="/alltests"
+          element={isUserLogin ? <AllTests /> : <UserLogin />}
+        />
         <Route
           path="/admin/*"
           element={isAdminLogin ? <AdminMain /> : <AdminLogin />}
