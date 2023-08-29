@@ -13,6 +13,17 @@ const UserRegister = () => {
           </h2>
           <div className="mb-3">
             <label htmlFor="userLogin" className="form-label">
+              Ism, familiya
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="userLogin"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="userLogin" className="form-label">
               Login
             </label>
             <input
