@@ -2,8 +2,13 @@
     display: flex;
 }
 
-.admin_main_wrapper .admin_main_right{
-    padding: 5%;
-    background-color: whitesmoke;
+.admin_main_wrapper .admin_main_right {
+    padding: 3%;
     width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .admin_main_wrapper {
+        display: block;
+    }
 }

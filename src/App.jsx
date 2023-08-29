@@ -7,8 +7,9 @@ import AdminMain from "./pages/AdminMain/AdminMain";
 import UserLogin from "./pages/UserLogin/UserLogin";
 import UserRegister from "./pages/UserRegister/UserRegister";
 import { Route, Routes } from "react-router-dom";
-
+import AdminLogin from "./pages/AdminLogin/AdminLogin";
 const App = () => {
+  const isAdminLogin = sessionStorage.getItem("en");
   return (
     <>
       <Routes>
@@ -16,7 +17,11 @@ const App = () => {
         <Route path="/UserRegister" element={<UserRegister />} />
         <Route path="/quiz" element={<QuizMain />} />
         <Route path="/alltests" element={<AllTests />} />
-        <Route path="/admin/*" element={<AdminMain />} />
+        <Route
+          path="/admin/*"
+          element={isAdminLogin ? <AdminMain /> : <AdminLogin />}
+        />
+        <Route path="/adminLogin" element={<AdminLogin />} />
       </Routes>
     </>
   );

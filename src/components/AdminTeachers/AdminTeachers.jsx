@@ -1,7 +1,7 @@
 const AdminTeachers = ()=>{
     return(
         <>
-        Admin teacher
+        <h2>Admin teacher</h2>
         </>
     )
 }
