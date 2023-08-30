@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import "./AdminTests.css";
 const AdminTests = () => {
   const [tests, setTests] = useState([]);
   const [newTest, setNewTest] = useState({
@@ -17,7 +17,7 @@ const AdminTests = () => {
   const [testCategory, setTestCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const enSession = sessionStorage.getItem("en");
-
+  const [file, setFile] = useState(null);
   setTimeout(() => {
     setIsMessage(false);
   }, 5000);
@@ -188,6 +188,30 @@ const AdminTests = () => {
     });
   };
 
+  const uploadExcel = async () => {
+    console.log(file);
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("excel", file);
+
+      try {
+        await axios.post(
+          `http://192.168.0.150:8000/api/v1/${enSession}/test/createExcel`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        fetchAllTests();
+      } catch (error) {
+        console.error("Error uploading Excel:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchAllTests();
     categoryDetails();
@@ -203,7 +227,7 @@ const AdminTests = () => {
             className="btn btn-primary m-1"
             data-bs-toggle="modal"
             data-bs-target="#addTest"
-            onClick={()=>categoryDetails()}
+            onClick={() => categoryDetails()}
           >
             <i className="fas fa-plus pe-1"></i> Test qo`shish
           </button>
@@ -216,9 +240,23 @@ const AdminTests = () => {
           >
             <i className="fa-solid fa-circle-plus"></i> Kategoriya
           </button>
-          <button type="button" className="btn btn-success m-1">
-            <i className="fa-sharp fa-solid fa-file-excel pe-1"></i> Excel
-          </button>
+          <div className="d-flex">
+            <input
+              style={{ width: "300px" }}
+              type="file"
+              className="form-control"
+              id="inputGroupFile02"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <button
+              type="button"
+              className="btn btn-success m-1"
+              onClick={uploadExcel}
+            >
+              <i className="fa-sharp fa-solid fa-file-excel pe-1"></i> Excel
+            </button>
+          </div>
+
           <button type="button" className="btn btn-info m-1">
             <i className="fa-sharp fa-solid fa-arrow-down-to-line pe-1"></i>{" "}
             Yuklab olish
