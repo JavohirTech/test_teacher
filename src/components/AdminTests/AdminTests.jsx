@@ -15,9 +15,12 @@ const AdminTests = () => {
   });
   const [isMessage, setIsMessage] = useState(false);
   const [testCategory, setTestCategory] = useState("");
-  const [categories, setCategories] = useState("");
+  const [categories, setCategories] = useState([]);
   const enSession = sessionStorage.getItem("en");
 
+  setTimeout(() => {
+    setIsMessage(false);
+  }, 5000);
   // change fetched API dates
   function formatDate(timestamp) {
     const date = new Date(timestamp);
@@ -143,8 +146,7 @@ const AdminTests = () => {
         formData
       )
       .then((response) => {
-        console.log(response);
-        if (response.data.code === 200) {
+        if (response.data.code == 200) {
           setTestCategory("");
         }
         setIsMessage(false);
@@ -155,19 +157,40 @@ const AdminTests = () => {
       });
   };
 
+  // categoryDetails using axios post
   const categoryDetails = () => {
+    const apiUrl = `http://192.168.0.150:8000/api/v1/admin/${enSession}/category/list`;
     axios
-      .post(
-        `http://192.168.0.150:8000/api/v1/admin/HOekP7PQjIbbfjZrvpuxQi0ottxSW5i3ac5MTER3wfVL2vNjld/category/list`
-      )
-      .then((res) => {
-        console.log(res.data.categories);
-        setCategories(res.data.categories.data);
+      .post(apiUrl)
+      .then((response) => {
+        const data = response.data;
+        if (data.ok && data.code === 200) {
+          setCategories(data.categories);
+          setTestCategory("");
+        } else {
+          console.error("Failed to fetch categories");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
+  };
+
+  // removeCategory using axios post
+  const removeCategory = (id) => {
+    const apiUrl = `http://192.168.0.150:8000/api/v1/admin/${enSession}/category/delete/${id}`;
+    axios.post(apiUrl).then((res) => {
+      if (res.data.code === 200) {
+        categoryDetails();
+      } else {
+        setIsMessage(true);
+      }
+    });
   };
 
   useEffect(() => {
     fetchAllTests();
+    categoryDetails();
   }, []);
 
   return (
@@ -180,6 +203,7 @@ const AdminTests = () => {
             className="btn btn-primary m-1"
             data-bs-toggle="modal"
             data-bs-target="#addTest"
+            onClick={()=>categoryDetails()}
           >
             <i className="fas fa-plus pe-1"></i> Test qo`shish
           </button>
@@ -262,9 +286,12 @@ const AdminTests = () => {
                           required
                         >
                           <option hidden>Kategoriya tanlang</option>
-                          <option value="1">Matematika</option>
-                          <option value="2">Ona tili</option>
-                          <option value="3">Tarix</option>
+
+                          {categories.map((category) => (
+                            <option key={category.id} value={category.name}>
+                              {category.name}
+                            </option>
+                          ))}
                         </select>
                         <div className="invalid-feedback">
                           Please select a valid state.
@@ -620,21 +647,16 @@ const AdminTests = () => {
                   />
                   <div className="form-text">Test uchun fan nomini yozing.</div>
                   <div className="categories">
-                    <span className="badge bg-primary m-1">Matematika</span>
-                    <span className="badge bg-primary m-1">Ona tili</span>
-                    <span className="badge bg-primary m-1">Tarix</span>
-                    <span className="badge bg-primary m-1">Tarix</span>
-                    <span className="badge bg-primary m-1">Tarix</span>
-                    <span className="badge bg-primary m-1">Tarix</span>
-                    <span className="badge bg-primary m-1">Tarix</span>
-                    <span className="badge bg-primary m-1">Tarix</span>
+                    {categories.map((category) => (
+                      <span
+                        onClick={() => removeCategory(category.id)}
+                        key={category.id}
+                        className="badge bg-primary m-1"
+                      >
+                        {category.name}
+                      </span>
+                    ))}
                   </div>
-                  {Array.isArray(categories) &&
-                    categories.map((category) => {
-                      <span key={category.id} className="badge bg-primary">
-                        {category.id} dfsdfsd
-                      </span>;
-                    })}
                 </div>
               </div>
               <div className="modal-footer">
@@ -642,6 +664,7 @@ const AdminTests = () => {
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  onClick={() => setTestCategory("")}
                 >
                   Bekor qilish
                 </button>
