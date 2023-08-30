@@ -3,7 +3,11 @@
     display: grid;
     gap: 20px;
     grid-template-columns: auto auto auto auto;
+}
+
+.test_cards a {
     color: #fff;
+    text-decoration: none;
 }
 
 .test_cards .test_card {
