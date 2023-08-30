@@ -9,7 +9,6 @@ const AdminTests = () => {
     answer_1: "",
     answer_2: "",
     answer_3: "",
-    answer_4: "",
     correct_answer: "",
     category: "",
   });
@@ -104,7 +103,6 @@ const AdminTests = () => {
     ans_1,
     ans_2,
     ans_3,
-    ans_4,
     ans_cor,
     category
   ) => {
@@ -114,7 +112,6 @@ const AdminTests = () => {
       answer_1: ans_1,
       answer_2: ans_2,
       answer_3: ans_3,
-      answer_4: ans_4,
       correct_answer: ans_cor,
       category: category,
       image: null,
@@ -130,7 +127,6 @@ const AdminTests = () => {
       answer_1: "",
       answer_2: "",
       answer_3: "",
-      answer_4: "",
       correct_answer: "",
       category: "",
     });
@@ -188,9 +184,8 @@ const AdminTests = () => {
     });
   };
 
+  // uplodaExcel using axios post
   const uploadExcel = async () => {
-    console.log(file);
-
     if (file) {
       const formData = new FormData();
       formData.append("excel", file);
@@ -210,6 +205,17 @@ const AdminTests = () => {
         console.error("Error uploading Excel:", error);
       }
     }
+  };
+
+  // downloadExcel using axios post
+  const downloadExcel = async () => {
+    const apiUrl = `http://192.168.0.150:8000/api/v1/${enSession}/test/export`;
+    axios.post(apiUrl).then((res) => {
+      if (res.data.ok && res.data.code === 200) {
+        fetchAllTests();
+        window.location.href = `http://192.168.0.150:8000/api/v1/${enSession}/public/storage/tests.xlsx`;
+      }
+    });
   };
 
   useEffect(() => {
@@ -257,7 +263,11 @@ const AdminTests = () => {
             </button>
           </div>
 
-          <button type="button" className="btn btn-info m-1">
+          <button
+            onClick={downloadExcel}
+            type="button"
+            className="btn btn-info m-1"
+          >
             <i className="fa-sharp fa-solid fa-arrow-down-to-line pe-1"></i>{" "}
             Yuklab olish
           </button>
@@ -411,39 +421,22 @@ const AdminTests = () => {
                     <div className="col">
                       <div className="mb-3">
                         <label htmlFor="test_question" className="form-label">
-                          4-javob
+                          To`g`ri javobni kiriting.
                         </label>
                         <textarea
                           className="form-control"
                           id="test_question"
                           rows="3"
-                          value={newTest.answer_4}
+                          value={newTest.correct_answer}
                           onChange={(e) =>
-                            setNewTest({ ...newTest, answer_4: e.target.value })
+                            setNewTest({
+                              ...newTest,
+                              correct_answer: e.target.value,
+                            })
                           }
                           required
                         ></textarea>
                       </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="mb-3">
-                      <label htmlFor="test_question" className="form-label">
-                        To`g`ri javobni kiriting.
-                      </label>
-                      <textarea
-                        className="form-control"
-                        id="test_question"
-                        rows="3"
-                        value={newTest.correct_answer}
-                        onChange={(e) =>
-                          setNewTest({
-                            ...newTest,
-                            correct_answer: e.target.value,
-                          })
-                        }
-                        required
-                      ></textarea>
                     </div>
                   </div>
                 </div>
@@ -595,37 +588,21 @@ const AdminTests = () => {
                   <div className="col">
                     <div className="mb-3">
                       <label htmlFor="test_question" className="form-label">
-                        4-javob
+                        To`g`ri javobni kiriting.
                       </label>
                       <textarea
                         className="form-control"
                         id="test_question"
                         rows="3"
-                        value={newTest.answer_4}
+                        value={newTest.correct_answer}
                         onChange={(e) =>
-                          setNewTest({ ...newTest, answer_4: e.target.value })
+                          setNewTest({
+                            ...newTest,
+                            correct_answer: e.target.value,
+                          })
                         }
                       ></textarea>
                     </div>
-                  </div>
-                </div>
-                <div className="col">
-                  <div className="mb-3">
-                    <label htmlFor="test_question" className="form-label">
-                      To`g`ri javobni kiriting.
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="test_question"
-                      rows="3"
-                      value={newTest.correct_answer}
-                      onChange={(e) =>
-                        setNewTest({
-                          ...newTest,
-                          correct_answer: e.target.value,
-                        })
-                      }
-                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -743,7 +720,6 @@ const AdminTests = () => {
                           <li>{test.answer_1}</li>
                           <li>{test.answer_2}</li>
                           <li>{test.answer_3}</li>
-                          <li>{test.answer_4}</li>
                           <li className="text-success">
                             {test.correct_answer}
                           </li>
@@ -768,7 +744,6 @@ const AdminTests = () => {
                                 test.answer_1,
                                 test.answer_2,
                                 test.answer_3,
-                                test.answer_4,
                                 test.correct_answer,
                                 test.category
                               )
