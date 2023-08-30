@@ -9,7 +9,8 @@ function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "http://192.168.0.150:8000/api/v1/admin/login";
+    const url =
+      "https://api.abdullajonov.uz/training-test-api/api/v1/admin/login";
     const headers = {
       "Content-Type": "application/json",
     };

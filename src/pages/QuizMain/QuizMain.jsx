@@ -37,7 +37,7 @@ function QuizMain() {
 
   const userFan = localStorage.getItem("fan");
   const fetchQuiz = () => {
-    const apiUrl = `http://192.168.0.150:8000/api/v1/${isUserLogin}/test/listbycategory/${userFan}`;
+    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${isUserLogin}/test/listbycategory/${userFan}`;
     axios.post(apiUrl).then((res) => {
       const transformedData = transformData(res.data);
       setQuizDatas(transformedData);

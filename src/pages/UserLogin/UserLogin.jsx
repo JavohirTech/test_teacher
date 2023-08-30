@@ -5,12 +5,17 @@ const UserLogin = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+
+  setTimeout(() => {
+    setError(null);
+  }, 5000);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        "http://192.168.0.150:8000/api/v1/user/login",
+        "https://api.abdullajonov.uz/training-test-api/api/v1/user/login",
         {
           method: "POST",
           headers: {
@@ -24,12 +29,19 @@ const UserLogin = () => {
       );
 
       const data = await response.json();
-
-      if (data.ok === "true" && data.code === 200) {
-        sessionStorage.setItem("enus", data.token);
+      if (
+        data.ok === "true" &&
+        data.code === 200 &&
+        data.data.allowed_to_test !== null
+      ) {
+        sessionStorage.setItem("enus", data.data.remember_token);
         window.location.href = "/alltests";
       } else {
         setError("Login xato.");
+      }
+
+      if (data.data.allowed_to_test === null) {
+        setError("Ruxsat berilmagan.");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");

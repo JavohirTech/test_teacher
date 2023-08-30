@@ -32,7 +32,7 @@ const UserRegister = () => {
 
     try {
       const response = await fetch(
-        "http://192.168.0.150:8000/api/v1/user/register",
+        "https://api.abdullajonov.uz/training-test-api/api/v1/user/register",
         {
           method: "POST",
           headers: {

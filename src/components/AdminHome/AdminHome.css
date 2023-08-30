@@ -1,0 +1,26 @@
+.admin_home_stats {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: auto auto auto auto;
+}
+
+.admin_home_stats .admin_stats_card{
+    padding: 20px;
+}
+
+.admin_stats_card h4 i{
+    background-color: dodgerblue;
+    color: #fff;
+}
+
+@media screen and (max-width: 450px) {
+    .admin_home_stats {
+        grid-template-columns: auto;
+    }
+}
+
+@media (min-width: 451px) and (max-width: 768px) {
+    .admin_home_stats {
+        grid-template-columns: auto auto;
+    }
+}

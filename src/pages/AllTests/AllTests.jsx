@@ -15,10 +15,11 @@ const AllTests = () => {
   localStorage.removeItem("fan");
 
   const allTestCategories = () => {
-    const apiUrl = `http://192.168.0.150:8000/api/v1/admin/${isUserLogin}/category/list`;
+    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${isUserLogin}/category/list`;
     axios.post(apiUrl).then((res) => {
       setCategories(res.data.categories);
       setCategoryTestCount(res.data.test_count);
+      console.log(res);
     });
   };
 
@@ -33,21 +34,31 @@ const AllTests = () => {
     >
       <div className="all_tests_wrapper">
         <div className="test_cards">
-          {categories.map((category) => (
-            <Link
-              to={`/quiz/${category.slug}`}
-              onClick={() => localStorage.setItem("fan", category.slug)}
-              key={category.id}
-              className="test_card"
-            >
-              <small>Test soni: {categoryTestCount[category.name]}</small>
-              <h4 className="mb-3">{category.name}</h4>
-              <small>Tuzuvchi: N.Abdullayeva</small>
-              <span>
-                Boshlash<i className="fas fa-arrow-right"></i>
-              </span>
-            </Link>
-          ))}
+          {categories && categories.length >= 0 ? (
+            categories.map((category) => (
+              <Link
+                to={`/quiz/${category.slug}`}
+                onClick={() => localStorage.setItem("fan", category.slug)}
+                key={category.id}
+                className="test_card"
+              >
+                <small>Test soni: {categoryTestCount[category.name]}</small>
+                <h4 className="mb-3">{category.name}</h4>
+                <small>Tuzuvchi: N.Abdullayeva</small>
+                <span>
+                  Boshlash<i className="fas fa-arrow-right"></i>
+                </span>
+              </Link>
+            ))
+          ) : (
+            <div className="text-center" style={{ color: "#e1e1e1" }}>
+              <i
+                className="fa-solid fa-ban m-3"
+                style={{ fontSize: "150px" }}
+              ></i>
+              <br /> TESTLAR MAVJUD EMAS
+            </div>
+          )}
         </div>
       </div>
     </div>

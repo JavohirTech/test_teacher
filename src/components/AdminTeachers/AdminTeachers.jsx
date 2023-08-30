@@ -4,24 +4,29 @@ import { useState, useEffect } from "react";
 const AdminTeachers = () => {
   const [users, setUsers] = useState([]);
   const enSession = sessionStorage.getItem("en");
-  useEffect(() => {
+  const fetchUser = () => {
     axios
-      .post(`http://192.168.0.150:8000/api/v1/admin/${enSession}/user/list`)
+      .post(
+        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/user/list`
+      )
       .then((response) => {
         const data = response.data;
-        if (data.ok === "true") {
+        if (data.ok === true) {
           setUsers(data.users);
         }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  };
+  useEffect(() => {
+    fetchUser();
   }, []);
 
   const deleteUser = (userId) => {
     axios
       .post(
-        `http://192.168.0.150:8000/api/v1/admin/${enSession}/user/delete/${userId}`
+        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/user/delete/${userId}`
       )
       .then((response) => {
         if (response.data.ok === "true") {
@@ -42,6 +47,22 @@ const AdminTeachers = () => {
     const year = date.getUTCFullYear();
     return `${day}.${month}.${year}`;
   }
+
+  const approveUser = (token) => {
+    axios
+      .post(
+        `https://api.abdullajonov.uz/training-test-api/api/v1/${token}/user/approve`
+      )
+      .then((response) => {
+        const data = response.data;
+        if (data.ok === true && data.code === 200) {
+          fetchUser();
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
 
   return (
     <>
@@ -64,7 +85,15 @@ const AdminTeachers = () => {
                   users.map((user) => (
                     <tr key={user.id}>
                       <th scope="row">{user.id}</th>
-                      <td>{user.name}</td>
+                      <td
+                        className={
+                          user.allowed_to_test === null
+                            ? "text-danger"
+                            : "text-success"
+                        }
+                      >
+                        {user.name}
+                      </td>
                       <td>{user.login}</td>
                       <td>
                         <b>Qo`shildi:</b>
@@ -72,6 +101,19 @@ const AdminTeachers = () => {
                         {formatDate(user.updated_at)}
                       </td>
                       <td className="col align-items-center">
+                        {user.allowed_to_test === null ? (
+                          <button
+                            onClick={() => approveUser(user.remember_token)}
+                            type="button"
+                            className="btn btn-success m-2"
+                          >
+                            <i className="fas fa-check pe-1"></i>Ruxsat
+                          </button>
+                        ) : (
+                          <span className="badge bg-success">
+                            Ruxsat berilgan
+                          </span>
+                        )}
                         <button
                           type="button"
                           className="btn btn-danger  m-2"
