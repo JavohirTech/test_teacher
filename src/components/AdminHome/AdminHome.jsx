@@ -9,7 +9,6 @@ const AdminHome = () => {
   const fetchStats = () => {
     const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/statistics`;
     axios.post(apiUrl).then((res) => {
-      console.log(res.data);
       setStats(res.data);
     });
   };
