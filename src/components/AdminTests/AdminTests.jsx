@@ -13,6 +13,9 @@ const AdminTests = () => {
     correct_answer: "",
     category: "",
   });
+  const [isMessage, setIsMessage] = useState(false);
+  const [testCategory, setTestCategory] = useState("");
+  const [categories, setCategories] = useState("");
   const enSession = sessionStorage.getItem("en");
 
   // change fetched API dates
@@ -49,9 +52,10 @@ const AdminTests = () => {
         if (response.data.code === 200) {
           fetchAllTests();
           clearInitialValue();
+          setIsMessage(false);
         }
       })
-      .catch(() => console.log("error add test"));
+      .catch(() => setIsMessage(true));
   };
 
   // deleteTest using axios post
@@ -129,6 +133,39 @@ const AdminTests = () => {
     });
   };
 
+  // addCategory using axios post
+  const addCategory = () => {
+    const formData = new FormData();
+    formData.append("name", testCategory);
+    axios
+      .post(
+        `http://192.168.0.150:8000/api/v1/admin/${enSession}/category/create`,
+        formData
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.data.code === 200) {
+          setTestCategory("");
+        }
+        setIsMessage(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error.response);
+        setIsMessage(true);
+      });
+  };
+
+  const categoryDetails = () => {
+    axios
+      .post(
+        `http://192.168.0.150:8000/api/v1/admin/HOekP7PQjIbbfjZrvpuxQi0ottxSW5i3ac5MTER3wfVL2vNjld/category/list`
+      )
+      .then((res) => {
+        console.log(res.data.categories);
+        setCategories(res.data.categories.data);
+      });
+  };
+
   useEffect(() => {
     fetchAllTests();
   }, []);
@@ -142,12 +179,17 @@ const AdminTests = () => {
             type="button"
             className="btn btn-primary m-1"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            onClick={clearInitialValue}
+            data-bs-target="#addTest"
           >
             <i className="fas fa-plus pe-1"></i> Test qo`shish
           </button>
-          <button type="button" className="btn btn-primary m-1">
+          <button
+            type="button"
+            className="btn btn-primary m-1"
+            data-bs-toggle="modal"
+            data-bs-target="#category"
+            onClick={categoryDetails}
+          >
             <i className="fa-solid fa-circle-plus"></i> Kategoriya
           </button>
           <button type="button" className="btn btn-success m-1">
@@ -157,12 +199,17 @@ const AdminTests = () => {
             <i className="fa-sharp fa-solid fa-arrow-down-to-line pe-1"></i>{" "}
             Yuklab olish
           </button>
+          {isMessage ? (
+            <span className="badge bg-danger">
+              Ma`lumot to`liq kiritilmadi.
+            </span>
+          ) : null}
         </div>
 
         {/* ADD TEST */}
         <div
           className="modal fade"
-          id="exampleModal"
+          id="addTest"
           tabIndex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
@@ -178,161 +225,177 @@ const AdminTests = () => {
                   className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  onClick={clearInitialValue}
                 ></button>
               </div>
-              <div className="modal-body">
-                <div className="row">
-                  <div className="col">
-                    <div className="mb-3">
+              <form>
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col">
+                      <div className="mb-3">
+                        <label htmlFor="formFile" className="form-label">
+                          Test uchun rasm (majburiy emas)
+                        </label>
+                        <input
+                          className="form-control"
+                          type="file"
+                          id="formFile"
+                          onChange={(e) =>
+                            setNewTest({ ...newTest, image: e.target.files[0] })
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="col">
                       <label htmlFor="formFile" className="form-label">
-                        Test uchun rasm (majburiy emas)
+                        Kategoriya
                       </label>
-                      <input
-                        className="form-control"
-                        type="file"
-                        id="formFile"
-                        onChange={(e) =>
-                          setNewTest({ ...newTest, image: e.target.files[0] })
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className="col">
-                    <label htmlFor="formFile" className="form-label">
-                      Kategoriya
-                    </label>
-                    <div className="mb-3">
-                      <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        value={newTest.category}
-                        onChange={(e) =>
-                          setNewTest({ ...newTest, category: e.target.value })
-                        }
-                      >
-                        <option hidden>Kategoriya tanlang</option>
-                        <option value="1">Matematika</option>
-                        <option value="2">Ona tili</option>
-                        <option value="3">Tarix</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div className="col">
-                  <div className="mb-3">
-                    <label htmlFor="test_question" className="form-label">
-                      Test savoli
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="test_question"
-                      rows="3"
-                      value={newTest.question}
-                      onChange={(e) =>
-                        setNewTest({ ...newTest, question: e.target.value })
-                      }
-                    ></textarea>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    <div className="mb-3">
-                      <label htmlFor="test_question" className="form-label">
-                        1-javob
-                      </label>
-                      <textarea
-                        className="form-control"
-                        id="test_question"
-                        rows="3"
-                        value={newTest.answer_1}
-                        onChange={(e) =>
-                          setNewTest({ ...newTest, answer_1: e.target.value })
-                        }
-                      ></textarea>
+                      <div className="mb-3">
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          value={newTest.category}
+                          onChange={(e) =>
+                            setNewTest({ ...newTest, category: e.target.value })
+                          }
+                          selected
+                          required
+                        >
+                          <option hidden>Kategoriya tanlang</option>
+                          <option value="1">Matematika</option>
+                          <option value="2">Ona tili</option>
+                          <option value="3">Tarix</option>
+                        </select>
+                        <div className="invalid-feedback">
+                          Please select a valid state.
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="col">
                     <div className="mb-3">
                       <label htmlFor="test_question" className="form-label">
-                        2-javob
+                        Test savoli
                       </label>
                       <textarea
                         className="form-control"
                         id="test_question"
                         rows="3"
-                        value={newTest.answer_2}
+                        value={newTest.question}
                         onChange={(e) =>
-                          setNewTest({ ...newTest, answer_2: e.target.value })
+                          setNewTest({ ...newTest, question: e.target.value })
                         }
+                        required
                       ></textarea>
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                  <div className="row">
+                    <div className="col">
+                      <div className="mb-3">
+                        <label htmlFor="test_question" className="form-label">
+                          1-javob
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="test_question"
+                          rows="3"
+                          value={newTest.answer_1}
+                          onChange={(e) =>
+                            setNewTest({ ...newTest, answer_1: e.target.value })
+                          }
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="mb-3">
+                        <label htmlFor="test_question" className="form-label">
+                          2-javob
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="test_question"
+                          rows="3"
+                          value={newTest.answer_2}
+                          onChange={(e) =>
+                            setNewTest({ ...newTest, answer_2: e.target.value })
+                          }
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <div className="mb-3">
+                        <label htmlFor="test_question" className="form-label">
+                          3-javob
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="test_question"
+                          rows="3"
+                          value={newTest.answer_3}
+                          onChange={(e) =>
+                            setNewTest({ ...newTest, answer_3: e.target.value })
+                          }
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="mb-3">
+                        <label htmlFor="test_question" className="form-label">
+                          4-javob
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="test_question"
+                          rows="3"
+                          value={newTest.answer_4}
+                          onChange={(e) =>
+                            setNewTest({ ...newTest, answer_4: e.target.value })
+                          }
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
                   <div className="col">
                     <div className="mb-3">
                       <label htmlFor="test_question" className="form-label">
-                        3-javob
+                        To`g`ri javobni kiriting.
                       </label>
                       <textarea
                         className="form-control"
                         id="test_question"
                         rows="3"
-                        value={newTest.answer_3}
+                        value={newTest.correct_answer}
                         onChange={(e) =>
-                          setNewTest({ ...newTest, answer_3: e.target.value })
+                          setNewTest({
+                            ...newTest,
+                            correct_answer: e.target.value,
+                          })
                         }
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="mb-3">
-                      <label htmlFor="test_question" className="form-label">
-                        4-javob
-                      </label>
-                      <textarea
-                        className="form-control"
-                        id="test_question"
-                        rows="3"
-                        value={newTest.answer_4}
-                        onChange={(e) =>
-                          setNewTest({ ...newTest, answer_4: e.target.value })
-                        }
+                        required
                       ></textarea>
                     </div>
                   </div>
                 </div>
-                <div className="col">
-                  <div className="mb-3">
-                    <label htmlFor="test_question" className="form-label">
-                      To`g`ri javobni kiriting.
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="test_question"
-                      rows="3"
-                      value={newTest.correct_answer}
-                      onChange={(e) =>
-                        setNewTest({
-                          ...newTest,
-                          correct_answer: e.target.value,
-                        })
-                      }
-                    ></textarea>
-                  </div>
-                </div>
-              </div>
+              </form>
+
               <div className="modal-footer">
                 <button
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  onClick={clearInitialValue}
                 >
                   Bekor qilish
                 </button>
                 <button
                   onClick={addNewTest}
-                  type="button"
+                  type="submit"
                   className="btn btn-primary"
                   data-bs-dismiss="modal"
                 >
@@ -356,6 +419,7 @@ const AdminTests = () => {
                   className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
+                  onClick={clearInitialValue}
                 ></button>
               </div>
               <div className="modal-body">
@@ -505,6 +569,7 @@ const AdminTests = () => {
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  onClick={clearInitialValue}
                 >
                   Bekor qilish
                 </button>
@@ -515,6 +580,78 @@ const AdminTests = () => {
                   data-bs-dismiss="modal"
                 >
                   Yangilash
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* add category */}
+        <div
+          className="modal fade"
+          id="category"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                  Kategoriya qo`shish
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label htmlFor="categoryText" className="form-label">
+                    Kategoriya nomi
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="categoryText"
+                    onChange={(e) => setTestCategory(e.target.value)}
+                  />
+                  <div className="form-text">Test uchun fan nomini yozing.</div>
+                  <div className="categories">
+                    <span className="badge bg-primary m-1">Matematika</span>
+                    <span className="badge bg-primary m-1">Ona tili</span>
+                    <span className="badge bg-primary m-1">Tarix</span>
+                    <span className="badge bg-primary m-1">Tarix</span>
+                    <span className="badge bg-primary m-1">Tarix</span>
+                    <span className="badge bg-primary m-1">Tarix</span>
+                    <span className="badge bg-primary m-1">Tarix</span>
+                    <span className="badge bg-primary m-1">Tarix</span>
+                  </div>
+                  {Array.isArray(categories) &&
+                    categories.map((category) => {
+                      <span key={category.id} className="badge bg-primary">
+                        {category.id} dfsdfsd
+                      </span>;
+                    })}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Bekor qilish
+                </button>
+                <button
+                  type="button"
+                  onClick={addCategory}
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
+                  Qo`shish
                 </button>
               </div>
             </div>
