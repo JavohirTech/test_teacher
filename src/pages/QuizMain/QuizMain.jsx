@@ -1,64 +1,64 @@
 import React, { useEffect, useState } from "react";
 import Question from "../../components/TestComponents/Question";
 import "./QuizMain.css";
-const sampleQuestions = [
-  {
-    questionText: "What's the capital of France?",
-    options: ["Paris", "Berlin", "Madrid", "Rome"],
-    correctAnswer: "Paris",
-  },
-  {
-    questionText:
-      "What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem",
-    options: [
-      "Toshkent",
-      "What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem Berlin",
-      "Madrid",
-      "Rome What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem",
-    ],
-    correctAnswer:
-      "Rome What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem What's the capital of Toshkent? lorem",
-  },
-];
+import axios from "axios";
 
 function shuffleArray(array) {
-  let currentIndex = array.length,
-    randomIndex;
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
-
   return array;
 }
-const randomizedQuestions = shuffleArray([...sampleQuestions]);
-randomizedQuestions.forEach((question) => {
-  question.options = shuffleArray([...question.options]);
-});
+
+function transformData(data) {
+  return data.map((item) => {
+    const options = [
+      item.answer_1,
+      item.answer_2,
+      item.answer_3,
+      item.correct_answer,
+    ];
+    return {
+      questionText: item.question,
+      options: shuffleArray(options),
+      correctAnswer: item.correct_answer,
+    };
+  });
+}
 
 function QuizMain() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(randomizedQuestions.length * 6000);
+  const [quizDatas, setQuizDatas] = useState([]);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const isUserLogin = sessionStorage.getItem("enus");
+
+  const userFan = localStorage.getItem("fan");
+  const fetchQuiz = () => {
+    const apiUrl = `http://192.168.0.150:8000/api/v1/${isUserLogin}/test/listbycategory/${userFan}`;
+    axios.post(apiUrl).then((res) => {
+      const transformedData = transformData(res.data);
+      setQuizDatas(transformedData);
+      setTimeLeft(transformedData.length * 60);
+    });
+  };
 
   useEffect(() => {
-    if (timeLeft > 0 && currentQuestion < randomizedQuestions.length) {
+    fetchQuiz();
+  }, []);
+
+  useEffect(() => {
+    if (timeLeft > 0 && currentQuestion < quizDatas.length) {
       const timerId = setTimeout(() => {
         setTimeLeft(timeLeft - 1);
       }, 1000);
       return () => clearTimeout(timerId);
     } else if (timeLeft === 0) {
-      console.log(answers);
-      setCurrentQuestion(randomizedQuestions.length);
+      setCurrentQuestion(quizDatas.length);
     }
-  }, [timeLeft, currentQuestion, answers]);
+  }, [quizDatas, currentQuestion, answers, timeLeft]);
 
   const handleAnswerOptionClick = (isCorrect, option) => {
     if (isCorrect) {
@@ -67,16 +67,15 @@ function QuizMain() {
 
     setAnswers((prevAnswers) => {
       const existingAnswerIndex = prevAnswers.findIndex(
-        (answer) =>
-          answer.question === randomizedQuestions[currentQuestion].questionText
+        (answer) => answer.question === quizDatas[currentQuestion].questionText
       );
 
       if (existingAnswerIndex !== -1) {
         const updatedAnswers = [...prevAnswers];
         updatedAnswers[existingAnswerIndex] = {
-          question: randomizedQuestions[currentQuestion].questionText,
+          question: quizDatas[currentQuestion].questionText,
           userAnswer: option,
-          correctAnswer: randomizedQuestions[currentQuestion].correctAnswer,
+          correctAnswer: quizDatas[currentQuestion].correctAnswer,
         };
         return updatedAnswers;
       }
@@ -84,24 +83,23 @@ function QuizMain() {
       return [
         ...prevAnswers,
         {
-          question: randomizedQuestions[currentQuestion].questionText,
+          question: quizDatas[currentQuestion].questionText,
           userAnswer: option,
-          correctAnswer: randomizedQuestions[currentQuestion].correctAnswer,
+          correctAnswer: quizDatas[currentQuestion].correctAnswer,
         },
       ];
     });
   };
 
   const handleNextButtonClick = () => {
-    if (currentQuestion === randomizedQuestions.length - 1) {
-      console.log(answers);
-      setCurrentQuestion(randomizedQuestions.length);
+    if (currentQuestion === quizDatas.length - 1) {
+      setCurrentQuestion(quizDatas.length);
     } else {
       setCurrentQuestion((prevQuestion) => prevQuestion + 1);
     }
   };
 
-  if (currentQuestion === randomizedQuestions.length) {
+  if (currentQuestion === quizDatas.length) {
     return (
       <div className="quiz_main_results">
         <div className="d-flex align-items-center justify-content-center gap-1">
@@ -111,7 +109,7 @@ function QuizMain() {
               To`g`ri:{score}
             </span>
             <span className="text-white bg-danger bg-gradient rounded-bottom">
-              Xato:{randomizedQuestions.length - score}
+              Xato:{quizDatas.length - score}
             </span>
           </div>
           <span className="btn btn-outline-danger">{score * 2}</span>
@@ -154,13 +152,13 @@ function QuizMain() {
           </div>
           <div className="question-index text-end">
             <span className="badge bg-success">
-              {currentQuestion + 1}/{randomizedQuestions.length}
+              {currentQuestion + 1}/{quizDatas.length}
             </span>
           </div>
         </div>
         <Question
           key={currentQuestion}
-          data={randomizedQuestions[currentQuestion]}
+          data={quizDatas[currentQuestion]}
           handleAnswerOptionClick={handleAnswerOptionClick}
         />
         <div className="d-flex justify-content-end">
@@ -168,7 +166,7 @@ function QuizMain() {
             className="btn btn-success bg-gradient px-5"
             onClick={handleNextButtonClick}
           >
-            {currentQuestion === randomizedQuestions.length - 1
+            {currentQuestion === quizDatas.length - 1
               ? "Testni yakunlash"
               : "Keyingi"}
           </button>

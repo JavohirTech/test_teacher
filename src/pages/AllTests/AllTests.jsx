@@ -12,6 +12,8 @@ const AllTests = () => {
     navigate("/");
   }
 
+  localStorage.removeItem("fan");
+
   const allTestCategories = () => {
     const apiUrl = `http://192.168.0.150:8000/api/v1/admin/${isUserLogin}/category/list`;
     axios.post(apiUrl).then((res) => {
@@ -19,8 +21,6 @@ const AllTests = () => {
       setCategoryTestCount(res.data.test_count);
     });
   };
-
-  // http://192.168.0.150:8000/api/v1/LXyx7aGciH7BT38U/test/listbycategory/matematika
 
   useEffect(() => {
     allTestCategories();
@@ -35,7 +35,8 @@ const AllTests = () => {
         <div className="test_cards">
           {categories.map((category) => (
             <Link
-              to={`/category/${category.slug}`}
+              to={`/quiz/${category.slug}`}
+              onClick={() => localStorage.setItem("fan", category.slug)}
               key={category.id}
               className="test_card"
             >

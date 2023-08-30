@@ -3,12 +3,10 @@ import { useState, useEffect } from "react";
 
 const AdminTeachers = () => {
   const [users, setUsers] = useState([]);
-
+  const enSession = sessionStorage.getItem("en");
   useEffect(() => {
     axios
-      .post(
-        "http://192.168.0.150:8000/api/v1/admin/OSbc5zkJyYQ7T4I9e2CYF1sZ5qJB0VbimC93pp5g1VJcdkNa4x/user/list"
-      )
+      .post(`http://192.168.0.150:8000/api/v1/admin/${enSession}/user/list`)
       .then((response) => {
         const data = response.data;
         if (data.ok === "true") {
@@ -23,7 +21,7 @@ const AdminTeachers = () => {
   const deleteUser = (userId) => {
     axios
       .post(
-        `http://192.168.0.150:8000/api/v1/admin/OSbc5zkJyYQ7T4I9e2CYF1sZ5qJB0VbimC93pp5g1VJcdkNa4x/user/delete/${userId}`
+        `http://192.168.0.150:8000/api/v1/admin/${enSession}/user/delete/${userId}`
       )
       .then((response) => {
         if (response.data.ok === "true") {
