@@ -11,6 +11,13 @@
 .admin_stats_card h4 i{
     background-color: dodgerblue;
     color: #fff;
+    border-radius: 5px;
+}
+
+.admin_stats_card h4 i:hover{
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+
 }
 
 @media screen and (max-width: 450px) {
