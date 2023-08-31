@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./UserRegister.css";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/online_test.jpg";
 
 const UserRegister = () => {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ const UserRegister = () => {
         style={{ height: "100vh" }}
       >
         <form onSubmit={handleSubmit}>
+          <img src={logo} alt="" style={{ width: "100%" }} />
           <h2 className="text-center fst-italic text-primary opacity-75">
             Nasiba Abdullayeva
           </h2>

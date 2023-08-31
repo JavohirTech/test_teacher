@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./UserLogin.css";
+import logo from "../../assets/online_test.jpg";
 
 const UserLogin = () => {
   const [login, setLogin] = useState("");
@@ -55,7 +56,8 @@ const UserLogin = () => {
         style={{ height: "100vh" }}
       >
         <form onSubmit={handleSubmit}>
-          <h2 className="text-center fst-italic text-primary opacity-75">
+          <img src={logo} alt="" style={{width: "100%"}}/>
+          <h2 className="mt-3 text-center fst-italic text-primary opacity-75">
             N.Abdullayeva
           </h2>
           <div className="mb-3">
