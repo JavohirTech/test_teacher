@@ -15,6 +15,8 @@ const AdminTests = () => {
   const [isMessage, setIsMessage] = useState(false);
   const [testCategory, setTestCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const [updateTestId, setUpdateTestId] = useState("");
+
   const enSession = sessionStorage.getItem("en");
   const [file, setFile] = useState(null);
   setTimeout(() => {
@@ -37,7 +39,6 @@ const AdminTests = () => {
       )
       .then((response) => {
         setTests(response.data.tests.data);
-        console.log(response);
       })
       .catch((error) => {
         console.error("Error fetching data:");
@@ -64,7 +65,6 @@ const AdminTests = () => {
         }
       })
       .catch(() => setIsMessage(true));
-    console.log(newTest);
   };
 
   // deleteTest using axios post
@@ -87,10 +87,29 @@ const AdminTests = () => {
 
   // updateTest using axios post
   const updateTest = () => {
+    const formData = new FormData();
+
+    formData.append("id", updateTestId);
+    formData.append("question", newTest.question);
+    formData.append("answer_1", newTest.answer_1);
+    formData.append("answer_2", newTest.answer_2);
+    formData.append("answer_3", newTest.answer_3);
+    formData.append("correct_answer", newTest.correct_answer);
+    formData.append("category", newTest.category);
+    formData.append("question_image", newTest.question_image);
+
+    console.log(formData);
+    
+
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/test/update/`,
-        newTest
+        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/test/update`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       )
       .then((response) => {
         if (response.data.code === 200) {
@@ -99,7 +118,7 @@ const AdminTests = () => {
         }
       })
       .catch((error) => {
-        console.error("Error deleting test:", error);
+        console.error("Error update test:", error);
       });
   };
 
@@ -123,7 +142,6 @@ const AdminTests = () => {
       category: category,
       question_image: null,
     });
-    console.log(newTest);
   };
 
   // clearInitialValue for clear initial value of input
@@ -228,6 +246,28 @@ const AdminTests = () => {
     fetchAllTests();
     categoryDetails();
   }, []);
+
+  const combinedOnClick = (
+    id,
+    question,
+    answer_1,
+    answer_2,
+    answer_3,
+    correct_answer,
+    category
+  ) => {
+    setInitialValue(
+      id,
+      question,
+      answer_1,
+      answer_2,
+      answer_3,
+      correct_answer,
+      category
+    );
+    setUpdateTestId(id);
+    categoryDetails();
+  };
 
   return (
     <>
@@ -521,11 +561,16 @@ const AdminTests = () => {
                         onChange={(e) =>
                           setNewTest({ ...newTest, category: e.target.value })
                         }
+                        selected
+                        required
                       >
                         <option hidden>Kategoriya tanlang</option>
-                        <option value="1">Matematika</option>
-                        <option value="2">Ona tili</option>
-                        <option value="3">Tarix</option>
+
+                        {categories.map((category) => (
+                          <option key={category.id} value={category.name}>
+                            {category.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -628,7 +673,7 @@ const AdminTests = () => {
                   Bekor qilish
                 </button>
                 <button
-                  onClick={updateTest}
+                  onClick={() => updateTest(newTest)}
                   type="button"
                   className="btn btn-primary"
                   data-bs-dismiss="modal"
@@ -766,7 +811,7 @@ const AdminTests = () => {
                             type="button"
                             className="btn btn-success m-2"
                             onClick={() =>
-                              setInitialValue(
+                              combinedOnClick(
                                 test.id,
                                 test.question,
                                 test.answer_1,

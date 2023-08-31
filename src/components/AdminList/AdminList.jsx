@@ -40,14 +40,7 @@ const AdminList = () => {
       })
       .then((res) => {
         console.log(res);
-        if (res.data.ok) {
-          setNewAdmin({
-            name: "",
-            login: "",
-            password: "",
-          });
-          console.log(newAdmin);
-        }
+        clearInitialValue();
         fetchAdmins();
       });
   };
