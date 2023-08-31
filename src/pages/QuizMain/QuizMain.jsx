@@ -21,6 +21,7 @@ function transformData(data) {
     ];
     return {
       questionText: item.question,
+      questionImage: item.image,
       options: shuffleArray(options),
       correctAnswer: item.correct_answer,
     };
@@ -141,6 +142,8 @@ function QuizMain() {
       </div>
     );
   }
+
+  // console.log(quizDatas);
 
   return (
     <div className="quiz_main_wrapper d-flex justify-content-center align-items-center">

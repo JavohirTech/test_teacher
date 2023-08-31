@@ -26,12 +26,10 @@ const AdminList = () => {
     fetchAdmins();
   }, []);
 
-
-
   const deleteUser = (userId) => {
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/user/delete/${userId}`
+        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/delete/${userId}`
       )
       .then((response) => {
         if (response.data.ok === "true") {
@@ -75,15 +73,7 @@ const AdminList = () => {
                     user.is_primary !== "1" ? (
                       <tr key={user.id}>
                         <th scope="row">{user.id}</th>
-                        <td
-                          className={
-                            user.allowed_to_test === null
-                              ? "text-danger"
-                              : "text-success"
-                          }
-                        >
-                          {user.name}
-                        </td>
+                        <td>{user.name}</td>
                         <td>{user.login}</td>
                         <td>
                           <b>Qo`shildi:</b>
@@ -110,7 +100,7 @@ const AdminList = () => {
                         >
                           <i className="fa-light fa-folder-open fa-3x py-3"></i>
                           <br />
-                          Foydalanuvchilar topilmadi
+                          Adminlar topilmadi
                         </td>
                       </tr>
                     )
@@ -124,7 +114,7 @@ const AdminList = () => {
                     >
                       <i className="fa-light fa-folder-open fa-3x py-3"></i>
                       <br />
-                      Foydalanuvchilar topilmadi
+                      Adminlar topilmadi
                     </td>
                   </tr>
                 )}
