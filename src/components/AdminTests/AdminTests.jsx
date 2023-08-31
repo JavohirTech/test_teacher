@@ -738,6 +738,7 @@ const AdminTests = () => {
                               height: "100px",
                               objectFit: "cover",
                             }}
+                            className="me-2"
                           />
                         ) : null}
                         {test.question}
