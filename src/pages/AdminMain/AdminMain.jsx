@@ -5,6 +5,7 @@ import AdminHome from "../../components/AdminHome/AdminHome";
 import AdminTests from "../../components/AdminTests/AdminTests";
 import AdminTeachers from "../../components/AdminTeachers/AdminTeachers";
 import "./AdminMain.css";
+import AdminList from "../../components/AdminList/AdminList";
 
 const AdminMain = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const AdminMain = () => {
             <Route path="/" element={<AdminHome />} />
             <Route path="teachers" element={<AdminTeachers />} />
             <Route path="tests" element={<AdminTests />} />
+            <Route path="admins" element={<AdminList />} />
           </Routes>
         </div>
       </div>

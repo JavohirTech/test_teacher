@@ -4,7 +4,7 @@ import "./AdminTests.css";
 const AdminTests = () => {
   const [tests, setTests] = useState([]);
   const [newTest, setNewTest] = useState({
-    image: null,
+    question_image: null,
     question: "",
     answer_1: "",
     answer_2: "",
@@ -37,9 +37,10 @@ const AdminTests = () => {
       )
       .then((response) => {
         setTests(response.data.tests.data);
+        console.log(response);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data:");
       });
   };
 
@@ -48,7 +49,12 @@ const AdminTests = () => {
     axios
       .post(
         `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/test/create`,
-        newTest
+        newTest,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       )
       .then((response) => {
         if (response.data.code === 200) {
@@ -58,6 +64,7 @@ const AdminTests = () => {
         }
       })
       .catch(() => setIsMessage(true));
+    console.log(newTest);
   };
 
   // deleteTest using axios post
@@ -114,7 +121,7 @@ const AdminTests = () => {
       answer_3: ans_3,
       correct_answer: ans_cor,
       category: category,
-      image: null,
+      question_image: null,
     });
     console.log(newTest);
   };
@@ -122,7 +129,7 @@ const AdminTests = () => {
   // clearInitialValue for clear initial value of input
   const clearInitialValue = () => {
     setNewTest({
-      image: null,
+      question_image: null,
       question: "",
       answer_1: "",
       answer_2: "",
@@ -168,7 +175,7 @@ const AdminTests = () => {
         }
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data category:", error);
       });
   };
 
@@ -212,8 +219,7 @@ const AdminTests = () => {
     const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/export`;
     axios.post(apiUrl).then((res) => {
       if (res.data.ok && res.data.code === 200) {
-        fetchAllTests();
-        window.location.href = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/public/storage/tests.xlsx`;
+        window.location.href = `https://api.abdullajonov.uz/training-test-api/public/storage/tests.xlsx`;
       }
     });
   };
@@ -313,7 +319,10 @@ const AdminTests = () => {
                           type="file"
                           id="formFile"
                           onChange={(e) =>
-                            setNewTest({ ...newTest, image: e.target.files[0] })
+                            setNewTest({
+                              ...newTest,
+                              question_image: e.target.files[0],
+                            })
                           }
                         />
                       </div>
@@ -492,7 +501,10 @@ const AdminTests = () => {
                         type="file"
                         id="formFile"
                         onChange={(e) =>
-                          setNewTest({ ...newTest, image: e.target.files[0] })
+                          setNewTest({
+                            ...newTest,
+                            question_image: e.target.files[0],
+                          })
                         }
                       />
                     </div>
@@ -714,7 +726,16 @@ const AdminTests = () => {
                   tests?.map((test) => (
                     <tr key={test.id}>
                       <td>{test.id}</td>
-                      <td>{test.question}</td>
+                      
+                      <td>{test.image !== null ? (
+                        <img
+                          src={
+                            "https://api.abdullajonov.uz/training-test-api/public/storage/images/" +
+                            test.image
+                          }
+                          style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                        />
+                      ) : null}{test.question}</td>
                       <td>
                         <ol className="text-danger">
                           <li>{test.answer_1}</li>

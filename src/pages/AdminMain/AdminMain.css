@@ -5,6 +5,8 @@
 .admin_main_wrapper .admin_main_right {
     padding: 3%;
     width: 100%;
+    overflow: auto;
+    height: 100vh;
 }
 
 @media screen and (max-width: 768px) {

@@ -37,6 +37,16 @@ const Sidebar = () => {
               <span>Testlar</span>
             </Link>
           </li>
+          <li>
+            <Link
+              className={activeItem === "Admin" ? "active" : ""}
+              to="/admin/admins"
+              onClick={() => setActiveItem("Admin")}
+            >
+              <i className="fa-solid fa-user-shield p-2"></i>{" "}
+              <span>Admin</span>
+            </Link>
+          </li>
         </ul>
       </div>
     </>
