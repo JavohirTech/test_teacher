@@ -5,6 +5,10 @@
     grid-template-columns: auto auto auto auto;
 }
 
+.test_card:last-child {
+    background: linear-gradient(to top, #118B44, #47B649) !important;
+}
+
 .test_cards a {
     color: #fff;
     text-decoration: none;
@@ -41,10 +45,69 @@
     left: 50%;
 }
 
+.circle {
+    position: fixed;
+    border-radius: 50%;
+}
+
+.pos_1 {
+    top: 300px;
+    left: 300px;
+    width: 300px;
+    height: 300px;
+    border: 20px solid rgba(63, 38, 255, 0.2);
+}
+
+.pos_2 {
+    top: 200px;
+    left: 300px;
+    width: 100px;
+    height: 100px;
+    border: 20px solid rgba(0, 205, 147, 0.2);
+}
+
+.pos_3 {
+    bottom: 200px;
+    right: 300px;
+    width: 100px;
+    height: 100px;
+    border: 20px solid rgba(0, 205, 147, 0.2);
+}
+
+.pos_4 {
+    bottom: 300px;
+    right: 300px;
+    width: 300px;
+    height: 300px;
+    border: 20px solid rgba(63, 38, 255, 0.2);
+}
+
+.pos_5 {
+    bottom: 300px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    border: 20px solid rgba(220, 136, 0, 0.2);
+}
+
+.pos_6 {
+    top: 500px;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    border: 20px solid rgba(204, 0, 231, 0.5);
+}
+
+
+
 
 @media screen and (max-width: 500px) {
     .test_cards {
         grid-template-columns: auto;
+    }
+
+    .alltest_wrapper {
+        height: unset !important;
     }
 }
 

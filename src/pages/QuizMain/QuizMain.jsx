@@ -40,7 +40,14 @@ function QuizMain() {
   const fetchQuiz = () => {
     const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${isUserLogin}/test/listbycategory/${userFan}`;
     axios.post(apiUrl).then((res) => {
-      const transformedData = transformData(res.data);
+      const aralash = apiUrl.split("/").slice(-1).join("/");
+      const combinedData = [].concat(
+        aralash == "mixed" ? [...res.data.tests] : [...res.data]
+      );
+      const transformedArray = combinedData.flatMap((subArray) => subArray);
+      const transformedData = transformData(
+        aralash == "mixed" ? transformedArray : res.data
+      );
       setQuizDatas(transformedData);
       setTimeLeft(transformedData.length * 60);
     });

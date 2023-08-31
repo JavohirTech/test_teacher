@@ -721,6 +721,7 @@ const AdminTests = () => {
                         onDoubleClick={() => removeCategory(category.id)}
                         key={category.id}
                         className="badge bg-primary m-1"
+                        style={{ userSelect: "none" }}
                       >
                         {category.name}
                       </span>
