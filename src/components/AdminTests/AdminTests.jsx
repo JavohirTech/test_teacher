@@ -726,16 +726,22 @@ const AdminTests = () => {
                   tests?.map((test) => (
                     <tr key={test.id}>
                       <td>{test.id}</td>
-                      {test.image !== null ? (
-                        <img
-                          src={
-                            "https://api.abdullajonov.uz/training-test-api/public/storage/images/" +
-                            test.image
-                          }
-                          style={{ width: "100px", height: "100px", objectFit: "cover" }}
-                        />
-                      ) : null}
-                      <td>{test.question}</td>
+                      <td>
+                        {test.image !== null ? (
+                          <img
+                            src={
+                              "https://api.abdullajonov.uz/training-test-api/public/storage/images/" +
+                              test.image
+                            }
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : null}
+                        {test.question}
+                      </td>
                       <td>
                         <ol className="text-danger">
                           <li>{test.answer_1}</li>
