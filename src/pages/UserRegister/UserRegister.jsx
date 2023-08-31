@@ -98,7 +98,7 @@ const UserRegister = () => {
               Parol
             </label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               id="password"
               value={formData.password}
@@ -110,7 +110,7 @@ const UserRegister = () => {
               Qaytadan parol
             </label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               id="repeatPassword"
               value={formData.repeatPassword}

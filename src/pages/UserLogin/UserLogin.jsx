@@ -76,7 +76,7 @@ const UserLogin = () => {
               Parol
             </label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               id="userPassword"
               value={password}
