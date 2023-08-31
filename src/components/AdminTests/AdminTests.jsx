@@ -98,9 +98,6 @@ const AdminTests = () => {
     formData.append("category", newTest.category);
     formData.append("question_image", newTest.question_image);
 
-    console.log(formData);
-    
-
     axios
       .post(
         `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/test/update`,
@@ -721,7 +718,7 @@ const AdminTests = () => {
                   <div className="categories">
                     {categories.map((category) => (
                       <span
-                        onClick={() => removeCategory(category.id)}
+                        onDoubleClick={() => removeCategory(category.id)}
                         key={category.id}
                         className="badge bg-primary m-1"
                       >

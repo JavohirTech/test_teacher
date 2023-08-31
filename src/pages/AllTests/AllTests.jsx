@@ -19,7 +19,6 @@ const AllTests = () => {
     axios.post(apiUrl).then((res) => {
       setCategories(res.data.categories);
       setCategoryTestCount(res.data.test_count);
-      console.log(res);
     });
   };
 
