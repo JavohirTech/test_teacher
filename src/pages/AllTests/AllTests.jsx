@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom"; // Import Link component
+import { useNavigate, Link } from "react-router-dom";
 import "./AllTests.css";
 import axios from "axios";
 import { useEffect, useState } from "react";

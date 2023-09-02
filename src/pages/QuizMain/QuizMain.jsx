@@ -120,7 +120,10 @@ function QuizMain() {
               Xato:{quizDatas.length - score}
             </span>
           </div>
-          <span className="btn btn-outline-danger">{score * 2}</span>
+          <span>
+            <span className="d-block btn btn-outline-danger">{score * 2}</span>
+            <span className="d-block badge bg-danger">ball</span>
+          </span>
         </div>
         <ul>
           {answers.map((answer, index) => (
