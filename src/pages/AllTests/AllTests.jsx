@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Import Link component
 import "./AllTests.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -43,11 +43,17 @@ const AllTests = () => {
           {categories && categories.length >= 0 ? (
             categories.map((category) => (
               <Link
-                to={`/quiz/${category.slug}`}
-                onClick={() => localStorage.setItem("fan", category.slug)}
+                to={
+                  categoryTestCount[category.name] !== 0
+                    ? `/quiz/${category.slug}`
+                    : "#"
+                }
+                onClick={() => localStorage.setItem("fan", category.name)}
+                //if not working change localStorage.setItem("fan", category.name) because Bobur said
                 key={category.id}
                 className="test_card"
               >
+                <small>Test soni: {categoryTestCount[category.name]}</small>
                 <h4 className="my-3">{category.name}</h4>
                 <small>Tuzuvchi: N.Abdullayeva</small>
                 <span>
