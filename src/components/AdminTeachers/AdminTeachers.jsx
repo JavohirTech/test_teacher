@@ -74,7 +74,6 @@ const AdminTeachers = () => {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">O`qituvchi ismi, familiyasi</th>
                   <th scope="col">Login</th>
                   <th scope="col">Vaqt</th>
                   <th scope="col">Amallar</th>
@@ -85,15 +84,6 @@ const AdminTeachers = () => {
                   users.map((user) => (
                     <tr key={user.id}>
                       <th scope="row">{user.id}</th>
-                      <td
-                        className={
-                          user.allowed_to_test === null
-                            ? "text-danger"
-                            : "text-success"
-                        }
-                      >
-                        {user.name}
-                      </td>
                       <td>{user.login}</td>
                       <td>
                         <b>Qo`shildi:</b>

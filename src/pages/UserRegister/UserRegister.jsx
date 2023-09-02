@@ -26,7 +26,7 @@ const UserRegister = () => {
     e.preventDefault();
 
     if (formData.password !== formData.repeatPassword) {
-      setErrorMessage("Passwords do not match!");
+      setErrorMessage("Parollar mos kelmaydi!");
       return;
     }
 
@@ -51,7 +51,7 @@ const UserRegister = () => {
       if (data.status) {
         navigate("/");
       } else {
-        alert("Error registering user.");
+        alert("Ro'yxatdan o'tkazishda xatolik.");
       }
     } catch (error) {
       console.error("There was an error:", error);
