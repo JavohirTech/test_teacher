@@ -6,7 +6,6 @@ import logo from "../../assets/online_test.jpg";
 const UserRegister = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
     login: "",
     password: "",
     repeatPassword: "",
@@ -38,9 +37,9 @@ const UserRegister = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
           },
           body: JSON.stringify({
-            name: formData.name,
             login: formData.login,
             password: formData.password,
           }),
@@ -69,19 +68,7 @@ const UserRegister = () => {
           <h2 className="text-center fst-italic text-primary opacity-75">
             Nasiba Abdullayeva
           </h2>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Ism, familiya
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              value={formData.name}
-              onChange={handleChange}
-              aria-describedby="emailHelp"
-            />
-          </div>
+
           <div className="mb-3">
             <label htmlFor="login" className="form-label">
               Login

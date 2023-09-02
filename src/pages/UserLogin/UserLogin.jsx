@@ -7,10 +7,6 @@ const UserLogin = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  setTimeout(() => {
-    setError(null);
-  }, 5000);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,10 +38,10 @@ const UserLogin = () => {
       }
 
       if (data.data.allowed_to_test === null) {
-        setError("Ruxsat berilmagan.");
+        setError("N.Abdullayeva tomonidan ruxsat berilmagan.");
       }
     } catch (err) {
-      setError("An error occurred. Please try again later.");
+      setError("Bunday foydalanuvchi mavjud emas");
     }
   };
 
@@ -56,10 +52,11 @@ const UserLogin = () => {
         style={{ height: "100vh" }}
       >
         <form onSubmit={handleSubmit}>
-          <img src={logo} alt="" style={{width: "100%"}}/>
+          <img src={logo} alt="" style={{ width: "100%" }} />
           <h2 className="mt-3 text-center fst-italic text-primary opacity-75">
             N.Abdullayeva
           </h2>
+          {error && <h3 className="text-danger text-center">{error}</h3>}
           <div className="mb-3">
             <label htmlFor="userLogin" className="form-label">
               Login
@@ -94,7 +91,6 @@ const UserLogin = () => {
           <p className="p-2 text-center fs-6">
             Hisobim yo`q <a href="/userRegister">Ro`yxatdan o`tish</a>
           </p>
-          {error && <p className="text-danger text-center">{error}</p>}
         </form>
       </div>
     </>
