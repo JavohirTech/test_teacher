@@ -19,6 +19,8 @@ const AdminTests = () => {
   const [indexPage, setIndexPage] = useState(1);
   const [nextPageStatus, setNextPageStatus] = useState("");
   const [prevPageStatus, setPrevPageStatus] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [foundSearchData, setFoundSearchData] = useState("");
 
   const enSession = sessionStorage.getItem("en");
   const [file, setFile] = useState(null);
@@ -284,30 +286,48 @@ const AdminTests = () => {
     }
   };
 
+  const searchingData = () => {
+    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/search/${searchText}`;
+    axios
+      .post(apiUrl)
+      .then((res) => {
+        setFoundSearchData(res.data.tests);
+      })
+      .catch(() => {
+        console.log(searchText);
+      });
+  };
+
+  useEffect(() => {
+    searchingData();
+  }, [searchText]);
+
   return (
     <>
       <div className="admin_tests_wrapper">
         <h2>Testlar</h2>
-        <div className="admin_tests_header">
-          <button
-            type="button"
-            className="btn btn-primary m-1"
-            data-bs-toggle="modal"
-            data-bs-target="#addTest"
-            onClick={() => categoryDetails()}
-          >
-            <i className="fas fa-plus pe-1"></i> Test qo`shish
-          </button>
-          <button
-            type="button"
-            className="btn btn-primary m-1"
-            data-bs-toggle="modal"
-            data-bs-target="#category"
-            onClick={categoryDetails}
-          >
-            <i className="fa-solid fa-circle-plus"></i> Kategoriya
-          </button>
-          <div className="d-flex">
+        <div className="admin_tests_header row">
+          <div className="col">
+            <button
+              type="button"
+              className="btn btn-primary m-1"
+              data-bs-toggle="modal"
+              data-bs-target="#addTest"
+              onClick={() => categoryDetails()}
+            >
+              <i className="fas fa-plus pe-1"></i> Test qo`shish
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary m-1"
+              data-bs-toggle="modal"
+              data-bs-target="#category"
+              onClick={categoryDetails}
+            >
+              <i className="fa-solid fa-circle-plus"></i> Kategoriya
+            </button>
+          </div>
+          <div className="d-flex col">
             <input
               style={{ width: "300px" }}
               type="file"
@@ -317,26 +337,32 @@ const AdminTests = () => {
             />
             <button
               type="button"
-              className="btn btn-success m-1"
+              className="btn btn-success me-2"
               onClick={uploadExcel}
             >
-              <i className="fa-sharp fa-solid fa-file-excel pe-1"></i> Excel
+              <i className="fa-sharp fa-solid fa-file-excel"></i>
             </button>
+            <button
+              onClick={downloadExcel}
+              type="button"
+              className="btn btn-info"
+            >
+              <i className="fa-sharp fa-solid fa-arrow-down-to-line"></i>
+            </button>
+            {isMessage ? (
+              <span className="badge bg-danger">
+                Ma`lumot to`liq kiritilmadi.
+              </span>
+            ) : null}
           </div>
-
-          <button
-            onClick={downloadExcel}
-            type="button"
-            className="btn btn-info m-1"
-          >
-            <i className="fa-sharp fa-solid fa-arrow-down-to-line pe-1"></i>{" "}
-            Yuklab olish
-          </button>
-          {isMessage ? (
-            <span className="badge bg-danger">
-              Ma`lumot to`liq kiritilmadi.
-            </span>
-          ) : null}
+          <div className="col">
+            <input
+              type="search"
+              placeholder="Qidiruv"
+              className="form-control"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
         </div>
 
         {/* ADD TEST */}
@@ -783,7 +809,74 @@ const AdminTests = () => {
                 </tr>
               </thead>
               <tbody>
-                {tests.length ? (
+                {foundSearchData !== "" && searchText !== "" ? (
+                  foundSearchData.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.id}</td>
+                      <td>
+                        {item.image !== null ? (
+                          <img
+                            src={
+                              "https://api.abdullajonov.uz/training-test-api/public/storage/images/" +
+                              item.image
+                            }
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                              objectFit: "cover",
+                            }}
+                            className="me-2"
+                          />
+                        ) : null}
+                        {item.question}
+                      </td>
+                      <td>
+                        <ol className="text-danger">
+                          <li>{item.answer_1}</li>
+                          <li>{item.answer_2}</li>
+                          <li>{item.answer_3}</li>
+                          <li className="text-success">
+                            {item.correct_answer}
+                          </li>
+                        </ol>
+                      </td>
+                      <td>
+                        <b>Qo`shildi:</b> {formatDate(item.created_at)} <br />{" "}
+                        <b>Yangilandi:</b> {formatDate(item.updated_at)}
+                      </td>
+                      <td>{item.category}</td>
+                      <td>
+                        <button
+                          data-bs-toggle="modal"
+                          data-bs-target="#updateTestModal"
+                          type="button"
+                          className="btn btn-success m-2"
+                          onClick={() =>
+                            combinedOnClick(
+                              item.id,
+                              item.question,
+                              item.answer_1,
+                              item.answer_2,
+                              item.answer_3,
+                              item.correct_answer,
+                              item.category
+                            )
+                          }
+                        >
+                          <i className="fa-light fa-pen-to-square pe-1"></i>{" "}
+                          Tahrirlash
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => deleteTest(item.id)}
+                          className="btn btn-danger m-2"
+                        >
+                          <i className="fa-light fa-trash pe-1"></i> O`chirish
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : tests.length ? (
                   tests?.map((test) => (
                     <tr key={test.id}>
                       <td>{test.id}</td>
