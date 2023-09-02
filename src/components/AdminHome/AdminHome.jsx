@@ -10,7 +10,6 @@ const AdminHome = () => {
     const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/statistics`;
     axios.post(apiUrl).then((res) => {
       setStats(res.data);
-      console.log(res);
     });
   };
 
@@ -50,6 +49,18 @@ const AdminHome = () => {
               </div>
             </>
           )}
+        </div>
+        <div className="d-flex gap-3 mb-5" style={{width: "100%", flexWrap: "wrap"}}>
+          {stats &&
+            stats.data &&
+            Object.entries(stats.test_by_category).map(([subject, value]) => (
+              <div key={subject} className="badge bg-success">
+                <span>
+                  {subject} <span className="badge bg-white mx-1 text-dark">{value}</span>
+                </span>
+                <br />
+              </div>
+            ))}
         </div>
         <AdminTeachers />
       </div>
