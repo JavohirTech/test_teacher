@@ -10,6 +10,7 @@ const AdminHome = () => {
     const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/statistics`;
     axios.post(apiUrl).then((res) => {
       setStats(res.data);
+      console.log(res);
     });
   };
 

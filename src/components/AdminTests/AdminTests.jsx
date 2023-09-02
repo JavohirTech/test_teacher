@@ -16,6 +16,9 @@ const AdminTests = () => {
   const [testCategory, setTestCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [updateTestId, setUpdateTestId] = useState("");
+  const [indexPage, setIndexPage] = useState(1);
+  const [nextPageStatus, setNextPageStatus] = useState("");
+  const [prevPageStatus, setPrevPageStatus] = useState("");
 
   const enSession = sessionStorage.getItem("en");
   const [file, setFile] = useState(null);
@@ -35,10 +38,13 @@ const AdminTests = () => {
   const fetchAllTests = () => {
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/listForAdmin?page=1`
+        `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/listForAdmin?page=${indexPage}`
       )
       .then((response) => {
         setTests(response.data.tests.data);
+
+        setNextPageStatus(response.data.tests.next_page_url);
+        setPrevPageStatus(response.data.tests.prev_page_url);
       })
       .catch((error) => {
         console.error("Error fetching data:");
@@ -242,7 +248,7 @@ const AdminTests = () => {
   useEffect(() => {
     fetchAllTests();
     categoryDetails();
-  }, []);
+  }, [indexPage]);
 
   const combinedOnClick = (
     id,
@@ -264,6 +270,18 @@ const AdminTests = () => {
     );
     setUpdateTestId(id);
     categoryDetails();
+  };
+
+  const decreasePageIndex = () => {
+    if (prevPageStatus) {
+      setIndexPage((prev) => prev - 1);
+    }
+  };
+
+  const increasePageIndex = () => {
+    if (nextPageStatus) {
+      setIndexPage((prev) => prev + 1);
+    }
   };
 
   return (
@@ -802,35 +820,33 @@ const AdminTests = () => {
                       </td>
                       <td>{test.category}</td>
                       <td>
-                        <td>
-                          <button
-                            data-bs-toggle="modal"
-                            data-bs-target="#updateTestModal"
-                            type="button"
-                            className="btn btn-success m-2"
-                            onClick={() =>
-                              combinedOnClick(
-                                test.id,
-                                test.question,
-                                test.answer_1,
-                                test.answer_2,
-                                test.answer_3,
-                                test.correct_answer,
-                                test.category
-                              )
-                            }
-                          >
-                            <i className="fa-light fa-pen-to-square pe-1"></i>{" "}
-                            Tahrirlash
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => deleteTest(test.id)}
-                            className="btn btn-danger m-2"
-                          >
-                            <i className="fa-light fa-trash pe-1"></i> O`chirish
-                          </button>
-                        </td>
+                        <button
+                          data-bs-toggle="modal"
+                          data-bs-target="#updateTestModal"
+                          type="button"
+                          className="btn btn-success m-2"
+                          onClick={() =>
+                            combinedOnClick(
+                              test.id,
+                              test.question,
+                              test.answer_1,
+                              test.answer_2,
+                              test.answer_3,
+                              test.correct_answer,
+                              test.category
+                            )
+                          }
+                        >
+                          <i className="fa-light fa-pen-to-square pe-1"></i>{" "}
+                          Tahrirlash
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => deleteTest(test.id)}
+                          className="btn btn-danger m-2"
+                        >
+                          <i className="fa-light fa-trash pe-1"></i> O`chirish
+                        </button>
                       </td>
                     </tr>
                   ))
@@ -847,6 +863,32 @@ const AdminTests = () => {
                     </td>
                   </tr>
                 )}
+
+                {tests.length > 0 ? (
+                  <tr className="text-center">
+                    <td colSpan="12">
+                      <button
+                        type="button"
+                        className="btn btn-primary m-2"
+                        onClick={decreasePageIndex}
+                        disabled={!prevPageStatus}
+                      >
+                        <i className="fa-solid fa-chevron-left me-2"></i>
+                        Oldingi
+                      </button>
+
+                      <button
+                        type="button"
+                        className="btn btn-primary m-2"
+                        onClick={increasePageIndex}
+                        disabled={!nextPageStatus}
+                      >
+                        Keyingi
+                        <i className="fa-solid fa-chevron-right ms-2"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>

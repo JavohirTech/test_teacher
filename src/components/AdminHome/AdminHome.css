@@ -4,17 +4,17 @@
     grid-template-columns: auto auto auto auto;
 }
 
-.admin_home_stats .admin_stats_card{
+.admin_home_stats .admin_stats_card {
     padding: 20px;
 }
 
-.admin_stats_card h4 i{
+.admin_stats_card h4 i {
     background-color: dodgerblue;
     color: #fff;
     border-radius: 5px;
 }
 
-.admin_stats_card h4 i:hover{
+.admin_stats_card h4 i:hover {
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 
@@ -24,6 +24,15 @@
     .admin_home_stats {
         grid-template-columns: auto;
     }
+
+    .admin_home_stats .admin_stats_card {
+        padding: unset;
+    }
+
+    .admin_stats_card h4 i {
+        font-size: 20px;
+    }
+    
 }
 
 @media (min-width: 451px) and (max-width: 768px) {
