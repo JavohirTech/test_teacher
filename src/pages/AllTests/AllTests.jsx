@@ -53,12 +53,14 @@ const AllTests = () => {
                 key={category.id}
                 className="test_card"
               >
-                <small>Test soni: {categoryTestCount[category.name]}</small>
+                {/* <small>Test soni: {categoryTestCount[category.name]}</small> */}
                 <h4 className="my-3">{category.name}</h4>
                 <small>Tuzuvchi: N.Abdullayeva</small>
-                <span>
-                  Boshlash<i className="fas fa-arrow-right"></i>
-                </span>
+                {categoryTestCount[category.name] !== 0 ? (
+                  <span>
+                    Boshlash<i className="fas fa-arrow-right"></i>
+                  </span>
+                ) : null}
               </Link>
             ))
           ) : (
@@ -76,8 +78,8 @@ const AllTests = () => {
             onClick={() => localStorage.setItem("fan", "mixed")}
             className="test_card"
           >
-            <small>Test soni: 40</small>
-            <h4 className="mb-3">Aralash</h4>
+            {/* <small>Test soni: 40</small> */}
+            <h4 className="my-3">Aralash</h4>
             <small>Tuzuvchi: N.Abdullayeva</small>
             <span>
               Boshlash<i className="fas fa-arrow-right"></i>
