@@ -44,19 +44,24 @@ const AdminHome = () => {
               <div className="admin_stats_card">
                 <h4 className="d-flex align-items-center">
                   <i className="fa-regular fa-user-minus fa-2x p-3 m-3 bg-warning"></i>{" "}
-                  Ruxsat berilmagan: {stats.data.not_aproved_users}
+                  Ruxsat berilmagan:{" "}
+                  {stats.data.all_users - stats.data.aproved_users}
                 </h4>
               </div>
             </>
           )}
         </div>
-        <div className="d-flex gap-3 mb-5" style={{width: "100%", flexWrap: "wrap"}}>
+        <div
+          className="d-flex gap-3 mb-5"
+          style={{ width: "100%", flexWrap: "wrap" }}
+        >
           {stats &&
             stats.data &&
             Object.entries(stats.test_by_category).map(([subject, value]) => (
               <div key={subject} className="badge bg-success">
                 <span>
-                  {subject} <span className="badge bg-white mx-1 text-dark">{value}</span>
+                  {subject}{" "}
+                  <span className="badge bg-white mx-1 text-dark">{value}</span>
                 </span>
                 <br />
               </div>
