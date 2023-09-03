@@ -52,7 +52,7 @@ const UserLogin = () => {
         style={{ height: "100vh" }}
       >
         <form onSubmit={handleSubmit}>
-          <img src={logo} alt="" style={{ width: "100%" }} />
+          <img src={logo} alt="" style={{ width: "100%", height: "100%" }} />
           <h2 className="mt-3 text-center fst-italic text-primary opacity-75">
             N.Abdullayeva
           </h2>
