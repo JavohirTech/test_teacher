@@ -1,0 +1,11 @@
+# robots.txt for https://abdullayeva.vercel.app/
+
+# Standard web-crawling property for all web crawlers
+User-agent: *
+
+# Allow all web crawlers full access to all parts of the site
+Disallow:
+
+# Specify the location of your sitemap (if you have one)
+# Uncomment the line below if you have a sitemap
+# Sitemap: https://abdullayeva.vercel.app/sitemap.xml
