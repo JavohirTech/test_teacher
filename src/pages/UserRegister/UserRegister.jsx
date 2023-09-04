@@ -51,7 +51,7 @@ const UserRegister = () => {
       if (data.status) {
         navigate("/");
       } else {
-        alert("Ro'yxatdan o'tkazishda xatolik.");
+        alert("Bu login band! Iltimos boshqa login kiriting!");
       }
     } catch (error) {
       console.error("There was an error:", error);
