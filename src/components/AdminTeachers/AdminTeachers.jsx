@@ -65,7 +65,6 @@ const AdminTeachers = () => {
   };
 
   return (
-    <>
       <div className="admin_tests_wrapper">
         <h2>O`qituvchilar</h2>
         <div className="admin_tests_main my-4">
@@ -132,7 +131,6 @@ const AdminTeachers = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

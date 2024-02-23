@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "./AdminHome.css";
 import AdminTeachers from "../AdminTeachers/AdminTeachers";
+import "./AdminHome.css";
 const AdminHome = () => {
   const [stats, setStats] = useState(null);
   const enSession = sessionStorage.getItem("en");

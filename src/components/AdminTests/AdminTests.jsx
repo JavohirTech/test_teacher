@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import FileUpload from "../FileUpload";
 import "./AdminTests.css";
 const AdminTests = () => {
   const [tests, setTests] = useState([]);
@@ -12,6 +13,7 @@ const AdminTests = () => {
     correct_answer: "",
     category: "",
   });
+  const [uploadQuizImage, setUploadQuizImage] = useState(null);
   const [isMessage, setIsMessage] = useState(false);
   const [testCategory, setTestCategory] = useState("");
   const [categories, setCategories] = useState([]);
@@ -395,6 +397,7 @@ const AdminTests = () => {
                         <label htmlFor="formFile" className="form-label">
                           Test uchun rasm (majburiy emas)
                         </label>
+                        <FileUpload setUploadQuizImage={setUploadQuizImage} />
                         <input
                           className="form-control"
                           type="file"
