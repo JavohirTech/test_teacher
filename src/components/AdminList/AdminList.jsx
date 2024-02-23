@@ -1,9 +1,16 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const AdminList = () => {
   const [users, setUsers] = useState([]);
+  const [editingAdminId, setEditingAdminId] = useState(null);
   const [newAdmin, setNewAdmin] = useState({
+    name: "",
+    login: "",
+    password: "",
+  });
+
+  const [updateAdminData, setUpdateAdminData] = useState({
     name: "",
     login: "",
     password: "",
@@ -39,10 +46,32 @@ const AdminList = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log("newadmin", newAdmin);
         clearInitialValue();
         fetchAdmins();
       });
+  };
+
+  const updateAdmin = async (userId) => {
+    try {
+      const res = await axios.post(
+        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/update/${userId}`,
+        updateAdminData
+      );
+
+      console.log(updateAdminData);
+      console.log(res);
+      fetchAdmins();
+      setUpdateAdminData({
+        name: "",
+        login: "",
+        password: "",
+      });
+      // Reset the editingAdminId after updating
+      setEditingAdminId(null);
+    } catch (error) {
+      console.error("Error updating admin:", error);
+    }
   };
 
   const deleteUser = (userId) => {
@@ -67,6 +96,14 @@ const AdminList = () => {
     return `${day}.${month}.${year}`;
   }
 
+  const setInitialValue = (user) => {
+    setUpdateAdminData({
+      name: user.name,
+      login: user.login,
+      password: user.password,
+    });
+  };
+
   const clearInitialValue = () => {
     setNewAdmin({
       name: "",
@@ -74,6 +111,8 @@ const AdminList = () => {
       password: "",
     });
   };
+
+  console.log(users);
 
   return (
     <>
@@ -166,15 +205,64 @@ const AdminList = () => {
 
       <div className="admin_tests_wrapper">
         <h2>Adminlar</h2>
-        <div>
+
+        <div className="d-flex justify-content-between align-items-center">
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-primary my-3"
             data-bs-toggle="modal"
             data-bs-target="#addTest"
           >
             Admin qo`shish
           </button>
+
+          {editingAdminId && (
+            <div className="d-flex gap-2">
+              <input
+                type="text"
+                className="form-control my-3"
+                placeholder="Ism"
+                value={updateAdminData.name}
+                onChange={(e) =>
+                  setUpdateAdminData((prevState) => ({
+                    ...prevState,
+                    name: e.target.value,
+                  }))
+                }
+              />
+              <input
+                type="text"
+                className="form-control my-3"
+                placeholder="Login"
+                value={updateAdminData.login}
+                onChange={(e) =>
+                  setUpdateAdminData((prevState) => ({
+                    ...prevState,
+                    login: e.target.value,
+                  }))
+                }
+              />
+              <input
+                type="text"
+                className="form-control my-3"
+                placeholder="Parol"
+                value={updateAdminData.password}
+                onChange={(e) =>
+                  setUpdateAdminData((prevState) => ({
+                    ...prevState,
+                    password: e.target.value,
+                  }))
+                }
+              />
+              <button
+                type="button"
+                className="btn btn-primary my-3"
+                onClick={() => updateAdmin(editingAdminId)}
+              >
+                Yangilash
+              </button>
+            </div>
+          )}
         </div>
         <div className="admin_tests_main my-4">
           <div className="table-responsive-md">
@@ -200,7 +288,19 @@ const AdminList = () => {
                         {formatDate(user.created_at)} <br /> <b>Yangilandi:</b>
                         {formatDate(user.updated_at)}
                       </td>
+
                       <td className="col align-items-center">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setInitialValue(user);
+                            setEditingAdminId(user.id);
+                          }}
+                          className="btn btn-primary"
+                          title="Tahrirlash"
+                        >
+                          <i className="fa-solid fa-pen"></i>
+                        </button>
                         <button
                           type="button"
                           className="btn btn-danger  m-2"
