@@ -12,7 +12,7 @@ const FileUpload = ({ setUploadQuizImage }) => {
         const blob = item.getAsFile();
         const imageUrl = URL.createObjectURL(blob);
         setPastedImageUrl(imageUrl);
-        setUploadQuizImage(blob); // Set the file to the parent component
+        setUploadQuizImage(blob); 
       }
     }
   };
@@ -20,7 +20,7 @@ const FileUpload = ({ setUploadQuizImage }) => {
   const handleRemoveImage = () => {
     URL.revokeObjectURL(pastedImageUrl);
     setPastedImageUrl(null);
-    setUploadQuizImage(null); // Reset the file in the parent component
+    setUploadQuizImage(null); 
   };
 
   useEffect(() => {
