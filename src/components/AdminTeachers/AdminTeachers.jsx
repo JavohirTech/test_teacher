@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const AdminTeachers = () => {
   const [users, setUsers] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const enSession = sessionStorage.getItem("en");
   const fetchUser = () => {
     axios
@@ -64,73 +65,98 @@ const AdminTeachers = () => {
       });
   };
 
+  // FIXME PREPARING FOR SEARCH
+  useEffect(() => {
+    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/user/list/search/${searchText}`;
+    fetch(apiUrl)
+      // .then((response) => response.json())
+      .then((res) => {
+        // setUsers(data.users);
+        console.log(res);
+      });
+
+    console.log("apiUrl", apiUrl);
+    console.log("searchText", searchText);
+  }, [searchText]);
+
   return (
-      <div className="admin_tests_wrapper">
+    <div className="admin_tests_wrapper">
+      <div className="d-flex justify-content-between">
         <h2>O`qituvchilar</h2>
-        <div className="admin_tests_main my-4">
-          <div className="table-responsive-md">
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Login</th>
-                  <th scope="col">Vaqt</th>
-                  <th scope="col">Amallar</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.length > 0 ? (
-                  users.map((user) => (
-                    <tr key={user.id}>
-                      <th scope="row">{user.id}</th>
-                      <td>{user.login}</td>
-                      <td>
-                        <b>Qo`shildi:</b>
-                        {formatDate(user.created_at)} <br /> <b>Yangilandi:</b>
-                        {formatDate(user.updated_at)}
-                      </td>
-                      <td className="col align-items-center">
-                        {user.allowed_to_test === null ? (
-                          <button
-                            onClick={() => approveUser(user.remember_token)}
-                            type="button"
-                            className="btn btn-success m-2"
-                          >
-                            <i className="fas fa-check pe-1"></i>Ruxsat
-                          </button>
-                        ) : (
-                          <span className="badge bg-success">
-                            Ruxsat berilgan
-                          </span>
-                        )}
+        {/* FIXME */}
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search..."
+          aria-describedby="button-addon2"
+          style={{ width: "300px" }}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+      </div>
+      <div className="admin_tests_main my-4">
+        <div className="table-responsive-md">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Login</th>
+                <th scope="col">Vaqt</th>
+                <th scope="col">Amallar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.length > 0 ? (
+                users.map((user) => (
+                  <tr key={user.id}>
+                    <th scope="row">{user.id}</th>
+                    <td>{user.login}</td>
+                    <td>
+                      <b>Qo`shildi:</b>
+                      {formatDate(user.created_at)} <br /> <b>Yangilandi:</b>
+                      {formatDate(user.updated_at)}
+                    </td>
+                    <td className="col align-items-center">
+                      {user.allowed_to_test === null ? (
                         <button
+                          onClick={() => approveUser(user.remember_token)}
                           type="button"
-                          className="btn btn-danger  m-2"
-                          onClick={() => deleteUser(user.id)}
+                          className="btn btn-success m-2"
                         >
-                          <i className="fa-light fa-trash pe-1"></i> O`chirish
+                          <i className="fas fa-check pe-1"></i>Ruxsat
                         </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="5"
-                      className="text-center p-5"
-                      style={{ opacity: "0.3" }}
-                    >
-                      <i className="fa-light fa-folder-open fa-3x py-3"></i>
-                      <br />
-                      Foydalanuvchilar topilmadi
+                      ) : (
+                        <span className="badge bg-success">
+                          Ruxsat berilgan
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        className="btn btn-danger  m-2"
+                        onClick={() => deleteUser(user.id)}
+                      >
+                        <i className="fa-light fa-trash pe-1"></i> O`chirish
+                      </button>
                     </td>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="text-center p-5"
+                    style={{ opacity: "0.3" }}
+                  >
+                    <i className="fa-light fa-folder-open fa-3x py-3"></i>
+                    <br />
+                    Foydalanuvchilar topilmadi
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
+    </div>
   );
 };
 
