@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Question from "../../components/TestComponents/Question";
 import "./QuizMain.css";
-import axios from "axios";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -153,6 +153,10 @@ function QuizMain() {
     );
   }
 
+  const handlePreviousButtonClick = () => {
+    setCurrentQuestion((prevQuestion) => prevQuestion - 1);
+  };
+
   // console.log(quizDatas);
 
   return (
@@ -174,13 +178,20 @@ function QuizMain() {
           data={quizDatas[currentQuestion]}
           handleAnswerOptionClick={handleAnswerOptionClick}
         />
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-between">
+          <button
+            className="btn btn-primary bg-gradient px-5"
+            onClick={handlePreviousButtonClick}
+            disabled={currentQuestion === 0}
+          >
+            Oldingi
+          </button>
           <button
             className="btn btn-success bg-gradient px-5"
             onClick={handleNextButtonClick}
           >
             {currentQuestion === quizDatas.length - 1
-              ? "Testni yakunlash"
+              ? "Yakunlash"
               : "Keyingi"}
           </button>
         </div>
