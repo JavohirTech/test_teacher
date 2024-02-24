@@ -1,4 +1,5 @@
 import axios from "axios";
+import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 
 const AdminTeachers = () => {
@@ -65,29 +66,38 @@ const AdminTeachers = () => {
       });
   };
 
-  // FIXME PREPARING FOR SEARCH
   useEffect(() => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/user/list/search/${searchText}`;
-    fetch(apiUrl)
-      // .then((response) => response.json())
-      .then((res) => {
-        // setUsers(data.users);
-        console.log(res);
+    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/user/search?query=${searchText}`;
+
+    const fetchData = debounce(() => {
+      axios.post(apiUrl).then((response) => {
+        const data = response.data;
+        console.log(data);
+        if (data.ok === true) {
+          setUsers(data.users);
+        }
       });
+    }, 1000); 
+
+    fetchData();
 
     console.log("apiUrl", apiUrl);
     console.log("searchText", searchText);
+
+    return () => {
+      // Clear the debounce timer when component unmounts
+      fetchData.cancel();
+    };
   }, [searchText]);
 
   return (
     <div className="admin_tests_wrapper">
       <div className="d-flex justify-content-between">
         <h2>O`qituvchilar</h2>
-        {/* FIXME */}
         <input
           type="text"
           className="form-control"
-          placeholder="Search..."
+          placeholder="Qidiruv..."
           aria-describedby="button-addon2"
           style={{ width: "300px" }}
           onChange={(e) => setSearchText(e.target.value)}
