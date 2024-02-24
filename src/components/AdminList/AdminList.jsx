@@ -20,9 +20,7 @@ const AdminList = () => {
   // fetchAdmins using axios post
   const fetchAdmins = () => {
     axios
-      .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/list`
-      )
+      .post(`https://api.nabdullayeva.uz/api/v1/admin/${enSession}/list`)
       .then((response) => {
         const data = response.data;
         if (data.ok === true) {
@@ -38,7 +36,7 @@ const AdminList = () => {
   }, []);
 
   const addNewAdmin = () => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/add`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/add`;
     axios
       .post(apiUrl, newAdmin, {
         headers: {
@@ -55,7 +53,7 @@ const AdminList = () => {
   const updateAdmin = async (userId) => {
     try {
       const res = await axios.post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/update/${userId}`,
+        `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/update/${userId}`,
         updateAdminData
       );
 
@@ -77,7 +75,7 @@ const AdminList = () => {
   const deleteUser = (userId) => {
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/delete/${userId}`
+        `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/delete/${userId}`
       )
       .then((response) => {
         fetchAdmins();

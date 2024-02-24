@@ -1,5 +1,5 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import "./AdminLogin.css";
 function AdminLogin() {
   const [login, setLogin] = useState("");
@@ -9,8 +9,7 @@ function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url =
-      "https://api.abdullajonov.uz/training-test-api/api/v1/admin/login";
+    const url = "https://api.nabdullayeva.uz/api/v1/admin/login";
     const headers = {
       "Content-Type": "application/json",
     };

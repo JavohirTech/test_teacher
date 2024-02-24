@@ -42,7 +42,7 @@ const AdminTests = () => {
   const fetchAllTests = () => {
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/listForAdmin?page=${indexPage}`
+        `https://api.nabdullayeva.uz/api/v1/${enSession}/test/listForAdmin?page=${indexPage}`
       )
       .then((response) => {
         setTests(response.data.tests.data);
@@ -60,7 +60,7 @@ const AdminTests = () => {
     newTest.question_image = uploadQuizImage;
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/test/create`,
+        `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/test/create`,
         newTest,
         {
           headers: {
@@ -83,7 +83,7 @@ const AdminTests = () => {
   const deleteTest = (testId) => {
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/test/delete/${testId}`
+        `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/test/delete/${testId}`
       )
       .then((response) => {
         const data = response.data;
@@ -112,7 +112,7 @@ const AdminTests = () => {
 
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/test/update`,
+        `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/test/update`,
         formData,
         {
           headers: {
@@ -172,7 +172,7 @@ const AdminTests = () => {
     formData.append("name", testCategory);
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/category/create`,
+        `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/category/create`,
         formData
       )
       .then((response) => {
@@ -189,7 +189,7 @@ const AdminTests = () => {
 
   // categoryDetails using axios post
   const categoryDetails = () => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/category/list`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/category/list`;
     axios
       .post(apiUrl)
       .then((response) => {
@@ -208,7 +208,7 @@ const AdminTests = () => {
 
   // removeCategory using axios post
   const removeCategory = (id) => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/category/delete/${id}`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/category/delete/${id}`;
     axios.post(apiUrl).then((res) => {
       if (res.data.code === 200) {
         categoryDetails();
@@ -226,7 +226,7 @@ const AdminTests = () => {
 
       try {
         await axios.post(
-          `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/createExcel`,
+          `https://api.nabdullayeva.uz/api/v1/${enSession}/test/createExcel`,
           formData,
           {
             headers: {
@@ -243,7 +243,7 @@ const AdminTests = () => {
 
   // downloadExcel using axios post
   const downloadExcel = async () => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/export`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/${enSession}/test/export`;
     axios.post(apiUrl).then((res) => {
       if (res.data.ok && res.data.code === 200) {
         window.location.href = `https://api.abdullajonov.uz/training-test-api/public/storage/tests.xlsx`;
@@ -291,7 +291,7 @@ const AdminTests = () => {
   };
 
   const searchingData = () => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/search/${searchText}`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/${enSession}/test/search/${searchText}`;
     axios
       .post(apiUrl)
       .then((res) => {

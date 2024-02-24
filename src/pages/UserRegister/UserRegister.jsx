@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./UserRegister.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/online_test.jpg";
+import "./UserRegister.css";
 
 const UserRegister = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const UserRegister = () => {
 
     try {
       const response = await fetch(
-        "https://api.abdullajonov.uz/training-test-api/api/v1/user/register",
+        "https://api.nabdullayeva.uz/api/v1/user/register",
         {
           method: "POST",
           headers: {

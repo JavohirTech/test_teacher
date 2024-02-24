@@ -1,7 +1,7 @@
-import { useNavigate, Link } from "react-router-dom"; // Import Link component
-import "./AllTests.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import Link component
+import "./AllTests.css";
 
 const AllTests = () => {
   const [categories, setCategories] = useState([]);
@@ -15,7 +15,7 @@ const AllTests = () => {
   localStorage.removeItem("fan");
 
   const allTestCategories = () => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${isUserLogin}/category/list`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/admin/${isUserLogin}/category/list`;
     axios.post(apiUrl).then((res) => {
       setCategories(res.data.categories);
       setCategoryTestCount(res.data.test_count);

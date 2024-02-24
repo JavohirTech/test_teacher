@@ -7,7 +7,7 @@ const AdminHome = () => {
   const enSession = sessionStorage.getItem("en");
 
   const fetchStats = () => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${enSession}/test/statistics`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/${enSession}/test/statistics`;
     axios.post(apiUrl).then((res) => {
       setStats(res.data);
     });

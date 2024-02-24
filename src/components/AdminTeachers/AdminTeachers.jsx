@@ -8,9 +8,7 @@ const AdminTeachers = () => {
   const enSession = sessionStorage.getItem("en");
   const fetchUser = () => {
     axios
-      .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/user/list`
-      )
+      .post(`https://api.nabdullayeva.uz/api/v1/admin/${enSession}/user/list`)
       .then((response) => {
         const data = response.data;
         if (data.ok === true) {
@@ -28,7 +26,7 @@ const AdminTeachers = () => {
   const deleteUser = (userId) => {
     axios
       .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/user/delete/${userId}`
+        `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/user/delete/${userId}`
       )
       .then((response) => {
         if (response.data.ok === "true") {
@@ -52,9 +50,7 @@ const AdminTeachers = () => {
 
   const approveUser = (token) => {
     axios
-      .post(
-        `https://api.abdullajonov.uz/training-test-api/api/v1/${token}/user/approve`
-      )
+      .post(`https://api.nabdullayeva.uz/api/v1/${token}/user/approve`)
       .then((response) => {
         const data = response.data;
         if (data.ok === true && data.code === 200) {
@@ -67,7 +63,7 @@ const AdminTeachers = () => {
   };
 
   useEffect(() => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/admin/${enSession}/user/search?query=${searchText}`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/admin/${enSession}/user/search?query=${searchText}`;
 
     const fetchData = debounce(() => {
       axios.post(apiUrl).then((response) => {
@@ -77,7 +73,7 @@ const AdminTeachers = () => {
           setUsers(data.users);
         }
       });
-    }, 1000); 
+    }, 1000);
 
     fetchData();
 

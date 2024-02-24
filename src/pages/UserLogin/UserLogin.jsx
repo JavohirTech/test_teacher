@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./UserLogin.css";
 import logo from "../../assets/online_test.jpg";
+import "./UserLogin.css";
 
 const UserLogin = () => {
   const [login, setLogin] = useState("");
@@ -12,7 +12,7 @@ const UserLogin = () => {
 
     try {
       const response = await fetch(
-        "https://api.abdullajonov.uz/training-test-api/api/v1/user/login",
+        "https://api.nabdullayeva.uz/api/v1/user/login",
         {
           method: "POST",
           headers: {

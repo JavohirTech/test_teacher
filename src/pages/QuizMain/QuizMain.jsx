@@ -38,7 +38,7 @@ function QuizMain() {
 
   const userFan = localStorage.getItem("fan");
   const fetchQuiz = () => {
-    const apiUrl = `https://api.abdullajonov.uz/training-test-api/api/v1/${isUserLogin}/test/listbycategory/${userFan}`;
+    const apiUrl = `https://api.nabdullayeva.uz/api/v1/${isUserLogin}/test/listbycategory/${userFan}`;
     axios.post(apiUrl).then((res) => {
       const aralash = apiUrl.split("/").slice(-1).join("/");
       const combinedData = [].concat(
@@ -190,9 +190,7 @@ function QuizMain() {
             className="btn btn-success bg-gradient px-5"
             onClick={handleNextButtonClick}
           >
-            {currentQuestion === quizDatas.length - 1
-              ? "Yakunlash"
-              : "Keyingi"}
+            {currentQuestion === quizDatas.length - 1 ? "Yakunlash" : "Keyingi"}
           </button>
         </div>
       </div>
