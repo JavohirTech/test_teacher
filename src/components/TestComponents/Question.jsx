@@ -20,7 +20,7 @@ function Question({ data, handleAnswerOptionClick }) {
         {data.questionImage !== null ? (
           <img
             src={
-              "https://api.abdullajonov.uz/training-test-api/public/storage/images/" +
+              "https://api.nabdullayeva.uz/training-test-api/public/storage/images/" +
               data.questionImage
             }
             className="p-2"
