@@ -820,7 +820,7 @@ const AdminTests = () => {
                       {item.image !== null ? (
                         <img
                           src={
-                            "https://api.abdullajonov.uz/training-test-api/public/storage/images/" +
+                            "https://api.nabdullayeva.uz/training-test-api/public/storage/images/" +
                             item.image
                           }
                           style={{
@@ -885,7 +885,7 @@ const AdminTests = () => {
                       {test.image !== null ? (
                         <img
                           src={
-                            "https://api.abdullajonov.uz/training-test-api/public/storage/images/" +
+                            "https://api.nabdullayeva.uz/training-test-api/public/storage/images/" +
                             test.image
                           }
                           style={{
